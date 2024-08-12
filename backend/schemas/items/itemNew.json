@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "image",
+        "category",
+        "title",
+        "price",
+        "locationId",
+        "isSold",
+        "description"
+    ],
+    "properties": {
+        "image": {
+            "type": "string",
+            "default": "",
+            "title": "The image Schema",
+            "examples": [
+                "https://example.com/image.jpg"
+            ]
+        },
+        "category": {
+            "type": "string",
+            "default": "",
+            "title": "The category Schema",
+            "examples": [
+                "Electronics"
+            ]
+        },
+        "title": {
+            "type": "string",
+            "default": "",
+            "title": "The title Schema",
+            "examples": [
+                "Smartphone"
+            ]
+        },
+        "price": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The price Schema",
+            "examples": [
+                299.99
+            ]
+        },
+        "locationId": {
+            "type": "integer",
+            "default": 0,
+            "title": "The locationId Schema",
+            "examples": [
+                1
+            ]
+        },
+        "isSold": {
+            "type": "boolean",
+            "default": false,
+            "title": "The isSold Schema",
+            "examples": [
+                false
+            ]
+        },
+        "description": {
+            "type": "string",
+            "default": "",
+            "title": "The description Schema",
+            "examples": [
+                "A brand new smartphone with excellent features."
+            ]
+        }
+    },
+    "examples": [{
+        "image": "https://example.com/image.jpg",
+        "category": "Electronics",
+        "title": "Smartphone",
+        "price": 299.99,
+        "locationId": 1,
+        "isSold": false,
+        "description": "A brand new smartphone with excellent features."
+    }]
+}
