@@ -6,18 +6,18 @@
     "title": "Root Schema",
     "required": [],
     "properties": {
-        "rating": {
-            "type": "integer",
-            "default": 0,
-            "title": "The rating Schema",
-            "examples": [
-                3
-            ]
-        },
-        "username": {
+        "itemName": {
             "type": "string",
             "default": "",
-            "title": "The username Schema",
+            "title": "The itemName Schema",
+            "examples": [
+                "couch"
+            ]
+        },
+        "posterUsername": {
+            "type": "string",
+            "default": "",
+            "title": "The posterUsername Schema",
             "examples": [
                 "mhealy"
             ]

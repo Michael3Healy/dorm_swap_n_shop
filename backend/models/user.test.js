@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const db = require('../db');
 const User = require('./user');
 const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expressError');
-const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll } = require('./_testCommon');
+const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll, testItemIds } = require('./_testCommon');
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -182,7 +182,7 @@ describe('get', function () {
       isAdmin: true,
       phoneNumber: '123-456-7890',
       profilePicture: null,
-      posts: [],
+      posts: expect.arrayContaining([expect.objectContaining({ itemId: testItemIds[0] })]),
       transactions: [],
     });
   });

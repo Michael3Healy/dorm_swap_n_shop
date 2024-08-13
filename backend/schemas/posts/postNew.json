@@ -4,22 +4,23 @@
     "type": "object",
     "default": {},
     "title": "Root Schema",
-    "required": [],
+    "required": [
+        "itemId",
+        "locationId"
+    ],
     "properties": {
-        "rating": {
+        "itemId": {
             "type": "integer",
-            "default": 0,
-            "title": "The rating Schema",
+            "title": "The itemId Schema",
             "examples": [
-                3
+                1
             ]
         },
-        "username": {
-            "type": "string",
-            "default": "",
-            "title": "The username Schema",
+        "locationId": {
+            "type": "integer",
+            "title": "The locationId Schema",
             "examples": [
-                "mhealy"
+                1
             ]
         }
     },

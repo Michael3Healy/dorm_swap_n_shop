@@ -48,11 +48,5 @@
             ]
         }
     },
-    "examples": [{
-        "email": "hiya@google.com",
-        "firstName": "Michael",
-        "lastName": "Healy",
-        "phoneNumber": "578-902-3958",
-        "profilePicture": "https://www.google.com/url?sa=i\u0026url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F\u0026psig=AOvVaw0JPgyudF2QtosVHBfR9Apk\u0026ust=1723404222195000\u0026source=images\u0026cd=vfe\u0026opi=89978449\u0026ved=0CBEQjRxqFwoTCKiN5JWT64cDFQAAAAAdAAAAABAJ"
-    }]
+    "additionalProperties": false
 }

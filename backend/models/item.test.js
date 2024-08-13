@@ -3,7 +3,7 @@
 const db = require('../db');
 const { NotFoundError, BadRequestError } = require('../expressError');
 const Item = require('./item');
-const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll, testItemIds, testLocationIds } = require('./_testCommon');
+const { commonBeforeAll, commonBeforeEach, commonAfterEach, commonAfterAll, testItemIds } = require('./_testCommon');
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -19,9 +19,9 @@ describe('create', () => {
 			category: 'Tools',
 			title: 'Hammer',
 			price: '19.99',
-			locationId: testLocationIds[0],
 			isSold: false,
 			description: 'A strong and durable hammer.',
+			ownerUsername: 'u1',
 		};
 
 		let item = await Item.create(newItem);
@@ -38,9 +38,9 @@ describe('create', () => {
             category: 'Tools',
             title: 'Hammer',
             price: '19.99',
-            location_id: testLocationIds[0],
             is_sold: false,
             description: 'A strong and durable hammer.',
+			owner_username: 'u1',
 		});
 	});
 });
@@ -62,9 +62,9 @@ describe('update', () => {
 			category: 'Electronics',
 			title: updateData.title,
 			price: updateData.price,
-			locationID: testLocationIds[0],
 			isSold: false,
 			description: updateData.description,
+			ownerUsername: 'u1',
 		});
 
 		// Verify item is actually updated in the database
@@ -75,9 +75,9 @@ describe('update', () => {
 			category: 'Electronics',
 			title: updateData.title,
 			price: updateData.price,
-			location_id: testLocationIds[0],
 			is_sold: false,
 			description: updateData.description,
+			owner_username: 'u1',
 		});
 	});
 

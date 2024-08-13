@@ -15,9 +15,5 @@
 			"maximum": 5
 		}
 	},
-	"examples": [
-		{
-			"rating": 3
-		}
-	]
+	"additionalProperties": false
 }

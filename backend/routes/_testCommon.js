@@ -3,12 +3,13 @@
 const db = require('../db.js');
 const User = require('../models/user');
 const Item = require('../models/item');
-// const Post = require("../models/post");
+const Post = require("../models/post");
 // const Transaction = require("../models/transaction");
 const { createToken } = require('../helpers/tokens');
 
-// const testItemIds = [];
-// const testPostIds = [];
+const testItemIds = [];
+const testPostIds = [];
+const testLocationId = [];
 // const testTransactionIds = [];
 
 async function commonBeforeAll() {
@@ -25,7 +26,7 @@ async function commonBeforeAll() {
      VALUES (40.712776, -74.005974, 'New York', 'NY', '10001', '5th Avenue')
      RETURNING id`
 	);
-	const testLocationId = locationRes.rows[0].id;
+	testLocationId[0] = locationRes.rows[0].id;
 
 	// Create test users
 	await User.register({
@@ -57,42 +58,56 @@ async function commonBeforeAll() {
 		isAdmin: false,
 		phoneNumber: '123-456-2347',
 	});
+
+	// Create test items
+	testItemIds.push(
+		(
+			await Item.create({
+				image: 'http://item1.img',
+				category: 'Category1',
+				title: 'Item1',
+				price: 10.0,
+				isSold: false,
+				description: 'Description for item 1',
+				ownerUsername: 'u1',
+			})
+		).id
+	);
+
+	testItemIds.push(
+		(
+			await Item.create({
+				image: 'http://item2.img',
+				category: 'Category2',
+				title: 'Item2',
+				price: 20.0,
+				isSold: false,
+				description: 'Description for item 2',
+				ownerUsername: 'u2',
+			})
+		).id
+	);
+	// Create test posts
+	testPostIds.push(
+		(
+			await Post.create({
+				posterUsername: 'u1',
+				itemId: testItemIds[0],
+				locationId: testLocationId[0],
+			})
+		).id
+	);
+
+	testPostIds.push(
+		(
+			await Post.create({
+				posterUsername: 'u2',
+				itemId: testItemIds[1],
+				locationId: testLocationId[0],
+			})
+		).id
+	);
 }
-// Create test items
-//   testItemIds.push((await Item.create({
-//     image: "http://item1.img",
-//     category: "Category1",
-//     title: "Item1",
-//     price: 10.00,
-//     locationId: testLocationId,
-//     isSold: false,
-//     description: "Description for item 1"
-//   })).id);
-
-//   testItemIds.push((await Item.create({
-//     image: "http://item2.img",
-//     category: "Category2",
-//     title: "Item2",
-//     price: 20.00,
-//     locationId: testLocationId,
-//     isSold: false,
-//     description: "Description for item 2"
-//   })).id);
-
-//   // Create test posts
-//   testPostIds.push((await Post.create({
-//     posterUsername: "u1",
-//     itemId: testItemIds[0],
-//     locationId: testLocationId,
-//     postedAt: new Date()
-//   })).id);
-
-//   testPostIds.push((await Post.create({
-//     posterUsername: "u2",
-//     itemId: testItemIds[1],
-//     locationId: testLocationId,
-//     postedAt: new Date()
-//   })).id);
 
 //   // Create test transactions
 //   testTransactionIds.push((await Transaction.create({
@@ -125,8 +140,9 @@ module.exports = {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-	//   testItemIds,
-	//   testPostIds,
+	testItemIds,
+	testPostIds,
+	testLocationId,
 	//   testTransactionIds,
 	u1Token,
 	u2Token,

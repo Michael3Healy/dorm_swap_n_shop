@@ -9,6 +9,7 @@ const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const userRoutes = require('./routes/users')
 const itemRoutes = require('./routes/items')
+const postRoutes = require('./routes/posts')
 
 const morgan = require("morgan");
 
@@ -22,6 +23,7 @@ app.use(authenticateJWT);
 app.use("/auth", authRoutes);
 app.use('/users', userRoutes)
 app.use('/items', itemRoutes)
+app.use('/posts', postRoutes)
 
 
 /** Handle 404 errors -- this matches everything */

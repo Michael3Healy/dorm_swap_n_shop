@@ -11,6 +11,10 @@ async function commonBeforeAll() {
 	await db.query('DELETE FROM users');
 	// noinspection SqlWithoutWhere
 	await db.query('DELETE FROM items');
+	// noinspection SqlWithoutWhere
+	await db.query('DELETE FROM locations');
+	// noinspection SqlWithoutWhere
+	await db.query('DELETE FROM posts');
 
 	await db.query(
 		`
@@ -32,15 +36,25 @@ async function commonBeforeAll() {
 	testLocationIds.splice(0, 0, ...resultsLocations.rows.map(r => r.id));
 
 	const resultsItems = await db.query(
-		`INSERT INTO items (image, category, title, price, location_id, is_sold, description)
+		`INSERT INTO items (image, category, title, price, is_sold, description, owner_username)
                     VALUES 
-                    ('/images/item1.png', 'Electronics', 'Laptop', 799.99, $1, FALSE, 'A powerful laptop with 16GB RAM and 512GB SSD.'),
-                    ('/images/item2.png', 'Furniture', 'Sofa', 299.99, $2, FALSE, 'A comfortable three-seater sofa.'),
-                    ('/images/item3.png', 'Books', 'JavaScript Guide', 19.99, $3, TRUE, 'A comprehensive guide to mastering JavaScript.')
+                    ('/images/item1.png', 'Electronics', 'Laptop', 799.99, FALSE, 'A powerful laptop with 16GB RAM and 512GB SSD.', 'u1'),
+                    ('/images/item2.png', 'Furniture', 'Sofa', 299.99, FALSE, 'A comfortable three-seater sofa.', 'u2'),
+                    ('/images/item3.png', 'Books', 'JavaScript Guide', 19.99, TRUE, 'A comprehensive guide to mastering JavaScript.', 'u3')
                     RETURNING id`,
-		[testLocationIds[0], testLocationIds[1], testLocationIds[2]]
 	);
 	testItemIds.splice(0, 0, ...resultsItems.rows.map(r => r.id));
+
+	await db.query(
+		`INSERT INTO posts (poster_username, item_id, location_id, posted_at)
+					VALUES 
+					('u1', $1, $2, '2024-03-10T17:00:00Z'),
+					('u2', $3, $4, '2023-03-10T18:00:00Z'),
+					('u3', $5, $6, '2022-03-10T19:00:00Z')
+					`,
+		[testItemIds[0], testLocationIds[0], testItemIds[1], testLocationIds[1], testItemIds[2], testLocationIds[2]
+		]
+	);
 }
 
 async function commonBeforeEach() {
