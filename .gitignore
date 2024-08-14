@@ -4,6 +4,7 @@
 /backend/*.sql
 /backend/*.log
 /backend/tmp
+/backend/coverage
 
 # Frontend
 /frontend/node_modules

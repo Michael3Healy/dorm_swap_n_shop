@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require('./routes/users')
 const itemRoutes = require('./routes/items')
 const postRoutes = require('./routes/posts')
+const locationRoutes = require('./routes/locations')
 
 const morgan = require("morgan");
 
@@ -24,6 +25,7 @@ app.use("/auth", authRoutes);
 app.use('/users', userRoutes)
 app.use('/items', itemRoutes)
 app.use('/posts', postRoutes)
+app.use('/locations', locationRoutes)
 
 
 /** Handle 404 errors -- this matches everything */

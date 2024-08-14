@@ -103,41 +103,9 @@ class Post {
 	}
 
 	/**
-	 * Update post data with `data`.
-	 *
-	 * This is a "partial update" --- it is fine if data does not contain all the fields;
-	 * this only changes provided fields.
-	 *
-	 * Data can include: { itemId, locationId }
-	 *
-	 * Returns { id, posterUsername, itemId, locationId }
-	 *
-	 * Throws NotFoundError if not found.
-	 */
-
-	static async update(id, data) {
-		const { setCols, values } = sqlForPartialUpdate(data, {
-			itemId: 'item_id',
-			locationId: 'location_id',
-		});
-		const idVarIdx = '$' + (values.length + 1);
-
-		const querySql = `UPDATE posts 
-                          SET ${setCols} 
-                          WHERE id = ${idVarIdx} 
-                          RETURNING id, poster_username AS "posterUsername", item_id AS "itemId", location_id AS "locationId"`;
-		const result = await db.query(querySql, [...values, id]);
-		const post = result.rows[0];
-
-		if (!post) throw new NotFoundError(`No post: ${id}`);
-
-		return post;
-	}
-
-	/**
 	 * Delete a post by ID.
 	 *
-	 * Returns { id }
+	 * Returns undefined.
 	 *
 	 * Throws NotFoundError if post not found.
 	 */
@@ -152,8 +120,6 @@ class Post {
 		const post = result.rows[0];
 
 		if (!post) throw new NotFoundError(`No post: ${id}`);
-
-		return post;
 	}
 }
 

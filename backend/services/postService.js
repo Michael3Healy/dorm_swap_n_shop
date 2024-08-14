@@ -1,5 +1,4 @@
 const Post = require('../models/post');
-const Item = require('../models/item');
 const { UnauthorizedError, BadRequestError } = require('../expressError');
 const db = require('../db');
 
@@ -31,33 +30,11 @@ async function createPost({ posterUsername, itemId, locationId }) {
 	}
 }
 
-/**
- * Update a post with the given data.
- *
- * if no post is found, a NotFoundError is thrown.
- *
- * if the user does not own the post or the item, an UnauthorizedError is thrown.
- *
- * Returns the updated post.
- */
-async function updatePost(username, postId, data) {
-	try {
-		// Check if user owns the post
-		const post = await Post.get(postId);
-		if (post.posterUsername !== username) throw new UnauthorizedError('User does not own this post');
+async function deletePost(id, username) {
+	const post = await Post.get(id);
+	if (post.posterUsername !== username) throw new UnauthorizedError('User does not own this post');
 
-		// Check if user owns the item
-		const item = await Item.get(post.itemId);
-		if (item.ownerUsername !== username) throw new UnauthorizedError('User does not own this item');
-
-        // Check if there is any data to update
-        if (Object.keys(data).length === 0) throw new BadRequestError('No update data provided');
-
-		// Proceed with the update
-		return await Post.update(postId, data);
-	} catch (error) {
-		throw error;
-	}
+	await Post.delete(id);
 }
 
-module.exports = { createPost, updatePost };
+module.exports = { createPost, deletePost };

@@ -3,13 +3,13 @@
 const db = require('../db.js');
 const User = require('../models/user');
 const Item = require('../models/item');
-const Post = require("../models/post");
+const Post = require('../models/post');
 // const Transaction = require("../models/transaction");
 const { createToken } = require('../helpers/tokens');
 
-const testItemIds = [];
-const testPostIds = [];
-const testLocationId = [];
+let testItemIds = [];
+let testPostIds = [];
+let testLocationId = [];
 // const testTransactionIds = [];
 
 async function commonBeforeAll() {
@@ -60,53 +60,57 @@ async function commonBeforeAll() {
 	});
 
 	// Create test items
-	testItemIds.push(
-		(
-			await Item.create({
-				image: 'http://item1.img',
-				category: 'Category1',
-				title: 'Item1',
-				price: 10.0,
-				isSold: false,
-				description: 'Description for item 1',
-				ownerUsername: 'u1',
-			})
-		).id
-	);
+	testItemIds[0] = (
+		await Item.create({
+			image: 'http://item1.img',
+			category: 'Category1',
+			title: 'Item1',
+			price: 10.0,
+			isSold: false,
+			description: 'Description for item 1',
+			ownerUsername: 'u1',
+		})
+	).id;
 
-	testItemIds.push(
-		(
-			await Item.create({
-				image: 'http://item2.img',
-				category: 'Category2',
-				title: 'Item2',
-				price: 20.0,
-				isSold: false,
-				description: 'Description for item 2',
-				ownerUsername: 'u2',
-			})
-		).id
-	);
-	// Create test posts
-	testPostIds.push(
-		(
-			await Post.create({
-				posterUsername: 'u1',
-				itemId: testItemIds[0],
-				locationId: testLocationId[0],
-			})
-		).id
-	);
+	testItemIds[1] = (
+		await Item.create({
+			image: 'http://item2.img',
+			category: 'Category2',
+			title: 'Item2',
+			price: 20.0,
+			isSold: false,
+			description: 'Description for item 2',
+			ownerUsername: 'u2',
+		})
+	).id;
 
-	testPostIds.push(
-		(
-			await Post.create({
-				posterUsername: 'u2',
-				itemId: testItemIds[1],
-				locationId: testLocationId[0],
-			})
-		).id
-	);
+	testItemIds[2] = (
+		await Item.create({
+			image: 'http://item3.img',
+			category: 'Category3',
+			title: 'Item3',
+			price: 30.0,
+			isSold: false,
+			description: 'Description for item 3',
+			ownerUsername: 'u1',
+		})
+	).id;
+
+	testPostIds[0] = (
+		await Post.create({
+			posterUsername: 'u1',
+			itemId: testItemIds[0],
+			locationId: testLocationId[0],
+		})
+	).id;
+
+	testPostIds[1] = (
+		await Post.create({
+			posterUsername: 'u2',
+			itemId: testItemIds[1],
+			locationId: testLocationId[0],
+		})
+	).id;
 }
 
 //   // Create test transactions

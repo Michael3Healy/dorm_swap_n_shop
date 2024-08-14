@@ -14,19 +14,6 @@ class Location {
 	 **/
 
 	static async create({ street, city, state, zip, latitude, longitude }) {
-		// Validate that all required fields are present and not null
-		if (!street || !city || !state || !zip || latitude === null || longitude === null) {
-			throw new BadRequestError('Missing or null required fields');
-		}
-
-    // Validate that latitude and longitude are numbers
-    const lat = parseFloat(latitude);
-    const lon = parseFloat(longitude);
-
-    if (isNaN(lat) || isNaN(lon)) {
-        throw new BadRequestError("Latitude and longitude must be valid numbers");
-    }
-
 		const result = await db.query(
 			`INSERT INTO locations (street, city, state, zip, latitude, longitude)
              VALUES ($1, $2, $3, $4, $5, $6)
@@ -34,6 +21,76 @@ class Location {
 			[street, city, state, zip, latitude, longitude]
 		);
 		const location = result.rows[0];
+
+		return location;
+	}
+
+	/**
+	 * Find all locations that match the given search filters.
+	 * 
+	 * searchFilters (all optional):
+	 * - street (case-insensitive, partial matches)
+	 * - city (case-insensitive, partial matches)
+	 * - state (case-insensitive, partial matches)
+	 * 
+	 * Returns [{ id, street, city, state, zip, latitude, longitude }, ...]
+	 */
+	static async findAll(searchFilters = {}) {
+		let query = `SELECT id,
+							street,
+							city,
+							state,
+							zip,
+							latitude,
+							longitude
+					 FROM locations`;
+		let whereExpressions = [];
+		let queryValues = [];
+
+		const { street, city, state } = searchFilters;
+
+		// For each possible search term, add to whereExpressions and queryValues so we can generate the right SQL
+		if (street) {
+			queryValues.push(`%${street}%`);
+			whereExpressions.push(`street ILIKE $${queryValues.length}`);
+		}
+
+		if (city) {
+			queryValues.push(`%${city}%`);
+			whereExpressions.push(`city ILIKE $${queryValues.length}`);
+		}
+
+		if (state) {
+			queryValues.push(`%${state}%`);
+			whereExpressions.push(`state ILIKE $${queryValues.length}`);
+		}
+
+		if (whereExpressions.length > 0) {
+			query += ' WHERE ' + whereExpressions.join(' AND ');
+		}
+
+		// Finalize query and return results
+		query += ' ORDER BY street';
+		const locationsRes = await db.query(query, queryValues);
+		return locationsRes.rows;
+	}
+	
+	/**
+	 * Delete location with given id.
+	 *
+	 * Returns { id }
+	 */
+	static async delete(id) {
+		const result = await db.query(
+			`DELETE
+			 FROM locations
+			 WHERE id = $1
+			 RETURNING id`,
+			[id]
+		);
+		const location = result.rows[0];
+
+		if (!location) throw new NotFoundError(`No location: ${id}`);
 
 		return location;
 	}

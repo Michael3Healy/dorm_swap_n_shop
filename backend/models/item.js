@@ -9,7 +9,7 @@ class Item {
 	 *
 	 * data should be { image, category, title, price, isSold, description }
 	 *
-	 * Returns { id, image, category, title, price, isSold, description }
+	 * Returns { id, image, category, title, price, isSold, description, ownerUsername }
 	 *
 	 * Throws BadRequestError if item already in database.
 	 **/

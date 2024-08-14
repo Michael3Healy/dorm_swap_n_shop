@@ -93,3 +93,42 @@ describe('findAll', () => {
 		]);
 	});
 });
+
+/************************************** get */
+
+describe('get', () => {
+	it('should get a post successfully', async () => {
+		const posts = await Post.findAll();
+		const post = await Post.get(posts[0].id);
+		expect(post).toEqual(posts[0]);
+	});
+
+	it('should return a NotFoundError if post not found', async () => {
+		try {
+			await Post.get(-1);
+			fail();
+		} catch (err) {
+			expect(err instanceof NotFoundError).toBeTruthy();
+		}
+	});
+});
+
+/************************************** delete */
+
+describe('delete', () => {
+	it('should delete a post successfully', async () => {
+		const posts = await Post.findAll();
+		await Post.delete(posts[0].id);
+		const res = await db.query('SELECT * FROM posts WHERE id = $1', [posts[0].id]);
+		expect(res.rows.length).toEqual(0);
+	});
+
+	it('should return a NotFoundError if post not found', async () => {
+		try {
+			await Post.delete(-1);
+			fail();
+		} catch (err) {
+			expect(err instanceof NotFoundError).toBeTruthy();
+		}
+	});
+});
