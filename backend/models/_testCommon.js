@@ -5,6 +5,7 @@ const { BCRYPT_WORK_FACTOR } = require('../config');
 
 const testItemIds = [];
 const testLocationIds = [];
+const testPostIds = [];
 
 async function commonBeforeAll() {
 	// noinspection SqlWithoutWhere
@@ -15,6 +16,8 @@ async function commonBeforeAll() {
 	await db.query('DELETE FROM locations');
 	// noinspection SqlWithoutWhere
 	await db.query('DELETE FROM posts');
+	// noinspection SqlWithoutWhere
+	await db.query('DELETE FROM transactions');
 
 	await db.query(
 		`
@@ -45,15 +48,26 @@ async function commonBeforeAll() {
 	);
 	testItemIds.splice(0, 0, ...resultsItems.rows.map(r => r.id));
 
-	await db.query(
+	const resultsPosts = await db.query(
 		`INSERT INTO posts (poster_username, item_id, location_id, posted_at)
 					VALUES 
 					('u1', $1, $2, '2024-03-10T17:00:00Z'),
-					('u2', $3, $4, '2023-03-10T18:00:00Z'),
-					('u3', $5, $6, '2022-03-10T19:00:00Z')
-					`,
+					('u1', $3, $4, '2023-03-10T18:00:00Z'),
+					('u2', $5, $6, '2022-03-10T19:00:00Z')
+					RETURNING id`,
 		[testItemIds[0], testLocationIds[0], testItemIds[1], testLocationIds[1], testItemIds[2], testLocationIds[2]
 		]
+	);
+	testPostIds.splice(0, 0, ...resultsPosts.rows.map(r => r.id));
+	
+	await db.query(
+		`INSERT INTO transactions (post_id, buyer_username, seller_username, price)
+					VALUES 
+					($1, 'u1', 'u2', 10.5),
+					($2, 'u1', 'u3', 20.5),
+					($3, 'u2', 'u3', 15.5)
+					`,
+		[testPostIds[0], testPostIds[1], testPostIds[2]]
 	);
 }
 
@@ -76,4 +90,5 @@ module.exports = {
 	commonAfterAll,
 	testItemIds,
 	testLocationIds,
+	testPostIds
 };

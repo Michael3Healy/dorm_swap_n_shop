@@ -183,7 +183,7 @@ describe('get', function () {
       phoneNumber: '123-456-7890',
       profilePicture: null,
       posts: expect.arrayContaining([expect.objectContaining({ itemId: testItemIds[0] })]),
-      transactions: [],
+      transactions: expect.any(Array),
     });
   });
 

@@ -55,14 +55,14 @@ describe('findAll', () => {
 			},
 			{
 				id: expect.any(Number),
-				posterUsername: 'u2',
+				posterUsername: 'u1',
 				itemId: testItemIds[1],
 				locationId: testLocationIds[1],
 				postedAt: expect.any(Date),
 			},
 			{
 				id: expect.any(Number),
-				posterUsername: 'u3',
+				posterUsername: 'u2',
 				itemId: testItemIds[2],
 				locationId: testLocationIds[2],
 				postedAt: expect.any(Date),
@@ -78,6 +78,13 @@ describe('findAll', () => {
 				posterUsername: 'u1',
 				itemId: testItemIds[0],
 				locationId: testLocationIds[0],
+				postedAt: expect.any(Date),
+			},
+			{
+				id: expect.any(Number),
+				posterUsername: 'u1',
+				itemId: testItemIds[1],
+				locationId: testLocationIds[1],
 				postedAt: expect.any(Date),
 			},
 		]);

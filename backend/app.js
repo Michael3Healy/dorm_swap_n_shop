@@ -11,6 +11,7 @@ const userRoutes = require('./routes/users')
 const itemRoutes = require('./routes/items')
 const postRoutes = require('./routes/posts')
 const locationRoutes = require('./routes/locations')
+const transactionRoutes = require('./routes/transactions')
 
 const morgan = require("morgan");
 
@@ -26,6 +27,7 @@ app.use('/users', userRoutes)
 app.use('/items', itemRoutes)
 app.use('/posts', postRoutes)
 app.use('/locations', locationRoutes)
+app.use('/transactions', transactionRoutes)
 
 
 /** Handle 404 errors -- this matches everything */

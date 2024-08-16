@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "minPrice",
+        "maxPrice",
+        "buyerUsername",
+        "sellerUsername",
+        "transactionDate"
+    ],
+    "properties": {
+        "minPrice": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The minPrice Schema",
+            "examples": [
+                50.0
+            ]
+        },
+        "maxPrice": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The maxPrice Schema",
+            "examples": [
+                200.0
+            ]
+        },
+        "buyerUsername": {
+            "type": "string",
+            "default": "",
+            "title": "The buyerUsername Schema",
+            "examples": [
+                "buyer123"
+            ]
+        },
+        "sellerUsername": {
+            "type": "string",
+            "default": "",
+            "title": "The sellerUsername Schema",
+            "examples": [
+                "seller456"
+            ]
+        },
+        "transactionDate": {
+            "type": "string",
+            "default": "",
+            "title": "The transactionDate Schema",
+            "examples": [
+                "2024-08-15T14:30:00Z"
+            ]
+        }
+    },
+    "additionalProperties": false
+}

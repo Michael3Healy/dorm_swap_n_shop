@@ -4,13 +4,13 @@ const db = require('../db.js');
 const User = require('../models/user');
 const Item = require('../models/item');
 const Post = require('../models/post');
-// const Transaction = require("../models/transaction");
+const Transaction = require("../models/transaction");
 const { createToken } = require('../helpers/tokens');
 
 let testItemIds = [];
 let testPostIds = [];
 let testLocationId = [];
-// const testTransactionIds = [];
+const testTransactionIds = [];
 
 async function commonBeforeAll() {
 	// Clean up existing data
@@ -111,17 +111,18 @@ async function commonBeforeAll() {
 			locationId: testLocationId[0],
 		})
 	).id;
-}
 
-//   // Create test transactions
-//   testTransactionIds.push((await Transaction.create({
-//     sellerUsername: "u1",
-//     buyerUsername: "u2",
-//     itemId: testItemIds[0],
-//     price: 10.00,
-//     transactionDate: new Date()
-//   })).id);
-// }
+	// Create test transactions
+	testTransactionIds[0] = (
+		await Transaction.create({
+			sellerUsername: 'u1',
+			buyerUsername: 'u2',
+			postId: testPostIds[0],
+			price: 10.0,
+			transactionDate: new Date(),
+		})
+	).id;
+}
 
 async function commonBeforeEach() {
 	await db.query('BEGIN');
@@ -147,7 +148,7 @@ module.exports = {
 	testItemIds,
 	testPostIds,
 	testLocationId,
-	//   testTransactionIds,
+	testTransactionIds,
 	u1Token,
 	u2Token,
 	adminToken,
