@@ -1,0 +1,8 @@
+.LoadingScreen {
+  display: flex;
+  justify-content: center;
+  top: 20vh;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}

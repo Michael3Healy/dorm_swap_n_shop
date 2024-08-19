@@ -1,0 +1,43 @@
+nav {
+	background-color: #ffffff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Medium Shadow */
+	height: 60px;
+}
+
+.nav-item {
+	width: 100px;
+	text-align: center;
+}
+
+.logout:hover {
+	color: red;
+	cursor: pointer;
+}
+
+nav a {
+	color: #6c757d;
+	text-decoration: none;
+}
+
+nav a.active {
+	color: black;
+	font-weight: bold;
+	border-bottom: 5px dotted;
+}
+
+nav a.active:hover {
+	color: black !important;
+}
+
+nav a:hover {
+	text-decoration: none;
+	color: #333333; /* Charcoal Gray */
+}
+
+nav a.active.navbar-brand {
+	border-bottom: none;
+}
+
+nav a:not(.navbar-brand):hover {
+	font-weight: bold;
+}

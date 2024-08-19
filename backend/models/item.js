@@ -27,6 +27,11 @@ class Item {
 		return item;
 	}
 
+	/** Find an item by id
+	 * 
+	 * Returns { id, image, category, title, price, isSold, description, ownerUsername }
+	 */
+
 	static async get(id) {
 		const itemRes = await db.query(
 			`SELECT id, image, category, title, price, is_sold AS "isSold", description, owner_username AS "ownerUsername"

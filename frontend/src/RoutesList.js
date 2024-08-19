@@ -13,23 +13,26 @@ import EditProfileForm from './Profile/EditProfileForm';
 import TransactionList from './Transactions/TransactionList';
 import TransactionDetail from './Transactions/TransactionDetail';
 import NotFound from './NotFound';
+import UserList from './Users/UserList';
 
-const RoutesList = ({ login, signup }) => {
+const RoutesList = ({ login, register }) => {
 	const { currUser } = useContext(UserContext);
 
 	return (
 		<Routes>
 			<Route path='/login' element={<LoginForm login={login} />} />
-            <Route path='/signup' element={<SignupForm signup={signup} />} />
+            <Route path='/register' element={<SignupForm register={register} />} />
             <Route path='/' element={<Home />} />
+            <Route path='/users' element={<UserList />} />
             <Route path={`/users/${currUser.username}`} element={<Profile />} />
             <Route path={`/users/${currUser.username}/edit`} element={<EditProfileForm />} />
             <Route path='/posts' element={<PostList />} />
             <Route path='/posts/new' element={<NewPostForm />} />
-            <Route path='/posts/:postId' element={<PostDetail />} />
-            <Route path='/posts/:postId/edit' element={<EditPostForm />} />
+            <Route path='/posts/:id' element={<PostDetail />} />
+            <Route path='/posts/:id/edit' element={<EditPostForm />} />
             <Route path='/transactions' element={<TransactionList />} />
             <Route path='/transactions/:transactionId' element={<TransactionDetail />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='*' element={<NotFound />} />
 		</Routes>
 	);

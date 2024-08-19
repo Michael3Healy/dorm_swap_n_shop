@@ -3,11 +3,11 @@ import React from 'react';
 import './ErrorAlert.css';
 
 // Component for displaying an error message.
-const ErrorAlert = ({ message }) => {
+const ErrorAlert = ({error}) => {
     return (
         <div className="ErrorAlert">
             <h2>Error</h2>
-            <p>{message}</p>
+            <p>{ error }</p>
         </div>
     );
 };

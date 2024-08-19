@@ -143,7 +143,7 @@ class User {
 
 	/** Given a username, return data about user.
 	 *
-	 * Returns { username, firstName, lastName, phoneNumber, email, isAdmin, profilePicture, posts, transactions }
+	 * Returns { username, firstName, lastName, phoneNumber, email, isAdmin, profilePicture, posts, transactions, rating, numRatings }
 	 *   where posts is [{ id, title, category, description, price, locationId, isSold, image }, ...]
 	 *   and where transactions is [{ id, postId, buyerId, sellerId, price, date }, ...]
 	 *
@@ -158,15 +158,15 @@ class User {
                   email,
                   is_admin AS "isAdmin",
                   phone_number AS "phoneNumber",
-                  profile_picture AS "profilePicture"
+                  profile_picture AS "profilePicture",
+				  rating,
+				  num_ratings AS "numRatings"
            FROM users
            WHERE username = $1`,
 			[username]
 		);
 
 		const user = userRes.rows[0];
-
-		if (!user) throw new NotFoundError(`No user: ${username}`);
 
 		const userPostsRes = await db.query(
 			`SELECT id, item_id AS "itemId", location_id AS "locationId", posted_at AS "postedAt"

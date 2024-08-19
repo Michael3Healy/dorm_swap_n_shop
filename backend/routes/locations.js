@@ -18,7 +18,7 @@ const { ensureLoggedIn, ensureAdmin } = require('../middleware/auth');
  *
  * Authorization required: logged in
  */
-router.post('/new', ensureLoggedIn, async function (req, res, next) {
+router.post('/', ensureLoggedIn, async function (req, res, next) {
 	try {
 		const validator = jsonschema.validate(req.body, locationNewSchema);
 		if (!validator.valid) {
@@ -34,28 +34,43 @@ router.post('/new', ensureLoggedIn, async function (req, res, next) {
 
 /**
  * Route to update location
- * 
+ *
  * GET / => { locations: [ { id, street, city, state, zip, latitude, longitude }, ...] }
- * 
+ *
  * Can filter on provided search filters:
  * - street (case-insensitive, partial matches)
  * - city (case-insensitive, partial matches)
  * - state (case-insensitive, partial matches)
- * 
+ *
  * Authorization required: none
  */
 router.get('/', async function (req, res, next) {
-    try {
-        const validator = jsonschema.validate(req.query, locationSearchSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(errs);
-        }
-        const locations = await Location.findAll(req.query);
-        return res.json({ locations });
-    } catch (err) {
-        return next(err);
-    }
+	try {
+		const validator = jsonschema.validate(req.query, locationSearchSchema);
+		if (!validator.valid) {
+			const errs = validator.errors.map(e => e.stack);
+			throw new BadRequestError(errs);
+		}
+		const locations = await Location.findAll(req.query);
+		return res.json({ locations });
+	} catch (err) {
+		return next(err);
+	}
+});
+
+/** Route to get location by id
+ *
+ * GET /:id => { location }
+ *
+ * Returns { id, street, city, state, zip, latitude, longitude }
+ */
+router.get('/:id', async function (req, res, next) {
+	try {
+		const location = await Location.get(req.params.id);
+		return res.json({ location });
+	} catch (err) {
+		return next(err);
+	}
 });
 
 /**

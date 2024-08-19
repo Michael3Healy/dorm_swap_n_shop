@@ -20,7 +20,7 @@ const itemUpdateSchema = require('../schemas/items/itemUpdate.json');
  *
  * Authorization required: logged in
  */
-router.post('/new', ensureLoggedIn, async function (req, res, next) {
+router.post('/', ensureLoggedIn, async function (req, res, next) {
 	try {
 		const validator = jsonschema.validate(req.body, itemNewSchema);
 		if (!validator.valid) {
@@ -29,6 +29,21 @@ router.post('/new', ensureLoggedIn, async function (req, res, next) {
 		}
 		const username = res.locals.user.username;
 		const item = await Item.create({ ...req.body, ownerUsername: username });
+		return res.json({ item });
+	} catch (err) {
+		return next(err);
+	}
+});
+
+/** Route to get an item by id
+ *
+ * GET /:id => { item }
+ * 
+ * Returns { id, image, category, title, price, isSold, description, ownerUsername }
+ */
+router.get('/:id', async function (req, res, next) {
+	try {
+		const item = await Item.get(req.params.id);
 		return res.json({ item });
 	} catch (err) {
 		return next(err);
@@ -59,9 +74,9 @@ router.patch('/:id', ensureLoggedIn, async function (req, res, next) {
 
 /**
  * Route to delete item
- * 
+ *
  * DELETE /:id => {"Deleted": id}
- * 
+ *
  * */
 router.delete('/:id', ensureLoggedIn, async function (req, res, next) {
 	try {
@@ -72,6 +87,5 @@ router.delete('/:id', ensureLoggedIn, async function (req, res, next) {
 		return next(err);
 	}
 });
-
 
 module.exports = router;

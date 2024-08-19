@@ -1,0 +1,15 @@
+.PostList {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 3rem;
+    justify-content: center;
+	padding-top: 2rem;
+}
+
+.PostList-cardLink {
+	text-decoration: none;
+	color: inherit;
+	margin-top: 3rem;
+}
+
+

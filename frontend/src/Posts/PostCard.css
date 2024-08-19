@@ -1,0 +1,7 @@
+.PostCard {
+	transition: 0.1s;
+}
+
+.PostCard:hover {
+	transform: scale(1.05);
+}

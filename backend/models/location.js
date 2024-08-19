@@ -74,7 +74,32 @@ class Location {
 		const locationsRes = await db.query(query, queryValues);
 		return locationsRes.rows;
 	}
-	
+
+	/** Get location by id
+	 * 
+	 * Returns { id, street, city, state, zip, latitude, longitude }
+	 */
+	static async get(id) {
+		const locationRes = await db.query(
+			`SELECT id,
+					street,
+					city,
+					state,
+					zip,
+					latitude,
+					longitude
+			 FROM locations
+			 WHERE id = $1`,
+			[id]
+		);
+
+		const location = locationRes.rows[0];
+
+		if (!location) throw new NotFoundError(`No location: ${id}`);
+
+		return location;
+	}
+
 	/**
 	 * Delete location with given id.
 	 *

@@ -1,0 +1,52 @@
+.PostDetail .container {
+	background-color: #f9f9f9;
+	border-radius: 5px;
+}
+
+.PostDetail {
+	padding: 2rem;
+}
+
+.PostDetail .image-container {
+	position: relative;
+	display: inline-block;
+}
+
+.PostDetail .image-container img {
+	width: 100%; /* Ensure the image fills the container */
+	border-radius: 5px; /* Optional: add rounded corners to the image */
+}
+
+.PostDetail .price-tag {
+	position: absolute;
+	top: 10px; /* Adjust this to move the tag down/up */
+	right: 10px; /* Adjust this to move the tag left/right */
+	padding: 10px 20px;
+	background-color: #45d033;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 5px 5px 5px 0;
+	font-size: 1.5rem;
+	z-index: 1; /* Ensures the price tag is on top of the image */
+}
+
+.PostDetail .price-tag:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 20px 10px 0 10px;
+	border-color: #45d033 transparent transparent transparent;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+.PostDetail .currency {
+	font-size: 1rem;
+	vertical-align: super;
+}
+
+.PostDetail .amount {
+	margin-left: 5px;
+}

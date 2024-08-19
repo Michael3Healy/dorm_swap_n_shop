@@ -1,0 +1,13 @@
+.App {
+	text-align: center;
+	overflow: hidden;
+}
+
+.App-main {
+	background: linear-gradient(90deg, #7742fd, #243bec);
+	min-height: calc(100vh - 60px) /* 60px is the height of the nav bar */;
+}
+
+html {
+	overflow-y: scroll; /* Always show vertical scroll bar to prevent shifting when changing components */
+}
