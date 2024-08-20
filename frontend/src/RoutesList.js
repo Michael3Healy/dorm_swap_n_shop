@@ -16,7 +16,6 @@ import NotFound from './NotFound';
 import UserList from './Users/UserList';
 
 const RoutesList = ({ login, register }) => {
-	const { currUser } = useContext(UserContext);
 
 	return (
 		<Routes>
@@ -24,15 +23,14 @@ const RoutesList = ({ login, register }) => {
             <Route path='/register' element={<SignupForm register={register} />} />
             <Route path='/' element={<Home />} />
             <Route path='/users' element={<UserList />} />
-            <Route path={`/users/${currUser.username}`} element={<Profile />} />
-            <Route path={`/users/${currUser.username}/edit`} element={<EditProfileForm />} />
+            <Route path='/users/:username' element={<Profile />} />
+            <Route path='/users/:username/edit' element={<EditProfileForm />} />
             <Route path='/posts' element={<PostList />} />
             <Route path='/posts/new' element={<NewPostForm />} />
             <Route path='/posts/:id' element={<PostDetail />} />
             <Route path='/posts/:id/edit' element={<EditPostForm />} />
             <Route path='/transactions' element={<TransactionList />} />
             <Route path='/transactions/:transactionId' element={<TransactionDetail />} />
-            <Route path='/profile' element={<Profile />} />
             <Route path='*' element={<NotFound />} />
 		</Routes>
 	);

@@ -19,6 +19,7 @@ function App() {
 		const fetchUser = async () => {
 			try {
 				const { username } = jwtDecode(token);
+				// each user is { username, firstName, lastName, phoneNumber, email, isAdmin, profilePicture, rating, numRatings, posts, transactions }
 				const user = await ShopApi.getUser(username);
 				setCurrUser(user);
 			} catch (err) {
