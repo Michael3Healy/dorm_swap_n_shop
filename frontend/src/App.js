@@ -55,6 +55,7 @@ function App() {
 			ShopApi.token = newToken;
 			setError(null);
 		} catch (err) {
+			console.log('error', err);
 			setError(err);
 		}
 	};
@@ -72,7 +73,7 @@ function App() {
 			<div className='App'>
 				<NavBar logout={logout} />
 				<main className='App-main'>
-					{error && <ErrorAlert message={error} />}
+					{error && <ErrorAlert error={error} />}
 					<RoutesList login={login} register={register} />
 				</main>
 			</div>

@@ -6,7 +6,7 @@ const PostCard = ({ post, item, location, user }) => {
 			<img src='https://tinyurl.com/2a5vsg4a' className='card-img-top' alt='...' />
 			<div className='card-body'>
 				<h5 className='card-title'>{item.title}</h5>
-				<p className='card-text'>{item.description}</p>
+				<p className='card-text description'>{item.description}</p>
 			</div>
 			<ul className='list-group list-group-flush'>
 				<li className='list-group-item'>Price: ${item.price}</li>

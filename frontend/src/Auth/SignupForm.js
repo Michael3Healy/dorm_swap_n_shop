@@ -1,17 +1,26 @@
 import useFields from '../hooks/useFields';
 import { useNavigate } from 'react-router-dom';
 import './SignupForm.css';
+import ErrorAlert from '../ErrorAlert';
+import { useState } from 'react';
 
 const SignupForm = ({ register }) => {
 	const [formData, handleChange] = useFields({ username: '', password: '', firstName: '', lastName: '', email: '', isAdmin: false, phoneNumber: '', profilePicture: '' });
+	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-        if (!formData.profilePicture) formData.profilePicture = 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login'
-		await register(formData);
-		navigate('/');
+		try {
+			if (!formData.profilePicture) formData.profilePicture = 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login'
+			await register(formData);
+			navigate('/');
+		} catch (err) {
+			setError(err);
+		}
 	};
+
+	if (error) return <ErrorAlert error={error} />;
 
 	return (
 		<div className='SignupForm container'>

@@ -1,5 +1,9 @@
-.PostCard {
+.PostCard.card {
 	transition: 0.1s;
+}
+
+.PostCard .description {
+	height: 50px;
 }
 
 .PostCard:hover {

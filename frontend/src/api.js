@@ -69,7 +69,7 @@ class ShopApi {
 
 	/** Update user data
 	 *
-	 * {email, firstName, lastName, phoneNumber, profilePicture} => user
+	 * {email, firstName, lastName, phoneNumber, profilePicture, password } => user
 	 *
 	 * Returns { username, firstName, lastName, email, phoneNumber, profilePicture }}
 	 */

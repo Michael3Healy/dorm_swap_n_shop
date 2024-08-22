@@ -1,15 +1,18 @@
+/* Container for the entire PostList section */
 .PostList {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 3rem;
+    padding-top: 2rem;
+}
+
+/* Grid layout for posts */
+.PostList-posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 3rem;
     justify-content: center;
-	padding-top: 2rem;
 }
 
+/* Style for individual post links */
 .PostList-cardLink {
-	text-decoration: none;
-	color: inherit;
-	margin-top: 3rem;
+    text-decoration: none;
+    color: inherit;
 }
-
-

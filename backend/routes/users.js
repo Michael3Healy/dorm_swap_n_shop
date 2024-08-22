@@ -21,6 +21,8 @@ const router = express.Router();
  * PATCH /:username { user } => { user }
  *
  * Data can include: {email, firstName, lastName, phoneNumber, profilePicture}
+ * 
+ * Data must include: {password}
  *
  * Returns { username, firstName, lastName, email, phoneNumber, profilePicture }
  *
@@ -34,7 +36,7 @@ router.patch('/:username', ensureCorrectUserOrAdmin, async function (req, res, n
 			const errs = validator.errors.map(e => e.stack);
 			throw new BadRequestError(errs);
 		}
-		const user = await User.update(req.params.username, req.body);
+		const user = await userService.updateUser(req.params.username, req.body);
 		return res.status(201).json(user);
 	} catch (err) {
 		return next(err);

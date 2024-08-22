@@ -1,52 +1,47 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://example.com/example.json",
-    "type": "object",
-    "default": {},
-    "title": "Root Schema",
-    "required": [],
-    "properties": {
-        "email": {
-            "type": "string",
-            "format": "email",
-            "default": "",
-            "title": "The email Schema",
-            "examples": [
-                "hiya@google.com"
-            ]
-        },
-        "firstName": {
-            "type": "string",
-            "default": "",
-            "title": "The firstName Schema",
-            "examples": [
-                "Michael"
-            ]
-        },
-        "lastName": {
-            "type": "string",
-            "default": "",
-            "title": "The lastName Schema",
-            "examples": [
-                "Healy"
-            ]
-        },
-        "phoneNumber": {
-            "type": "string",
-            "default": "",
-            "title": "The phoneNumber Schema",
-            "examples": [
-                "578-902-3958"
-            ]
-        },
-        "profilePicture": {
-            "type": "string",
-            "default": "",
-            "title": "The profilePicture Schema",
-            "examples": [
-                "https://www.google.com/url?sa=i\u0026url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F\u0026psig=AOvVaw0JPgyudF2QtosVHBfR9Apk\u0026ust=1723404222195000\u0026source=images\u0026cd=vfe\u0026opi=89978449\u0026ved=0CBEQjRxqFwoTCKiN5JWT64cDFQAAAAAdAAAAABAJ"
-            ]
-        }
-    },
-    "additionalProperties": false
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"default": {},
+	"title": "Root Schema",
+	"required": ["password"],
+	"properties": {
+		"password": {
+			"type": "string"
+		},
+		"email": {
+			"type": "string",
+			"format": "email",
+			"default": "",
+			"title": "The email Schema",
+			"examples": ["hiya@google.com"]
+		},
+		"firstName": {
+			"type": "string",
+			"default": "",
+			"title": "The firstName Schema",
+			"examples": ["Michael"]
+		},
+		"lastName": {
+			"type": "string",
+			"default": "",
+			"title": "The lastName Schema",
+			"examples": ["Healy"]
+		},
+		"phoneNumber": {
+			"type": "string",
+			"default": "",
+			"title": "The phoneNumber Schema",
+			"examples": ["578-902-3958"]
+		},
+		"profilePicture": {
+			"type": "string",
+			"default": "",
+			"title": "The profilePicture Schema",
+			"examples": [
+				"https://www.google.com/url?sa=i\u0026url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F\u0026psig=AOvVaw0JPgyudF2QtosVHBfR9Apk\u0026ust=1723404222195000\u0026source=images\u0026cd=vfe\u0026opi=89978449\u0026ved=0CBEQjRxqFwoTCKiN5JWT64cDFQAAAAAdAAAAABAJ"
+			]
+		}
+	},
+	"additionalProperties": false
 }

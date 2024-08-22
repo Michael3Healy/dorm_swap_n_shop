@@ -7,7 +7,7 @@
 	max-height: calc(100vh - 60px); /* 60px is the height of the nav bar */
 }
 
-label.required:after {
+.SignupForm label.required:after {
 	content: ' *';
 	color: red;
 }

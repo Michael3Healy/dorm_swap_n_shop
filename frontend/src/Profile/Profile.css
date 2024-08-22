@@ -1,0 +1,24 @@
+.Profile .profile-card {
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 2rem;
+}
+
+.Profile .main {
+    margin: 1rem;
+}
+
+.Profile .stats {
+    background: #eff0f1 !important;
+    color: black !important;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+#edit,
+#delete {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+}

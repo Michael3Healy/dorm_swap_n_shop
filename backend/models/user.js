@@ -225,8 +225,6 @@ class User {
 		const result = await db.query(querySql, [...values, username]);
 		const user = result.rows[0];
 
-		if (!user) throw new NotFoundError(`No user: ${username}`);
-
 		return user;
 	}
 
