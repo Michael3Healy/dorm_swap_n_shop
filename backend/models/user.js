@@ -168,6 +168,8 @@ class User {
 
 		const user = userRes.rows[0];
 
+		if (!user) throw new BadRequestError(`User with username ${username} not found`);
+
 		const userPostsRes = await db.query(
 			`SELECT id, item_id AS "itemId", location_id AS "locationId", posted_at AS "postedAt"
            FROM posts

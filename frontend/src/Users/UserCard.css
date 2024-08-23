@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap');
+.UserCard:hover {
+	transform: scale(1.05);
+}
 
-.UserCard body {
-	background-color: #545454;
-	font-family: 'Poppins', sans-serif;
-	font-weight: 300;
+.UserCard {
+	transition: 0.1s;
 }
 
 .UserCard .container {
@@ -18,6 +18,7 @@
 	background-color: #fff;
 	position: relative;
 	height: 370px;
+	
 }
 
 .UserCard .upper {

@@ -4,6 +4,7 @@ import ShopApi from '../api';
 import { useState, useEffect } from 'react';
 import ErrorAlert from '../ErrorAlert';
 import LoadingScreen from '../LoadingScreen';
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
 const UserCard = ({ username, profilePicture }) => {
 	const [user, setUser] = useState({});
@@ -32,14 +33,14 @@ const UserCard = ({ username, profilePicture }) => {
 		<div class='UserCard container d-flex justify-content-center align-items-center'>
 			<div class='card'>
 				<div class='upper'>
-					<img src='https://tinyurl.com/2a5vsg4a' class='img-fluid profile-pic' />
+					<img src={`${BASE_URL}/${profilePicture}`} class='img-fluid profile-pic' />
 				</div>
 				<div class='mt-5 text-center'>
 					<div className='profile-bg'>
 						<h3 class='mb-0 username'>{username}</h3>
 					</div>
 
-					<button class='btn btn-primary btn-sm follow mt-4 mx-3'>View Listings</button>
+					<Link to={`/users/${username}`}><button class='btn btn-primary btn-sm follow mt-4 mx-3'>View Profile</button></Link>
 					<button class='btn btn-success btn-sm follow mt-4 mx-3'>Message</button>
 
 					<div class='d-flex justify-content-between align-items-center mt-3 px-4'>

@@ -7,9 +7,9 @@ const validate = values => {
 	if (values.password.length < 6) {
 		errors.password = 'Password must be 6 or more characters';
 	}
-	if (!validateUrl(values.profilePicture)) {
-		errors.profilePicture = 'Profile picture must be a valid URL';
-	}
+	// if (!validateUrl(values.profilePicture)) {
+	// 	errors.profilePicture = 'Profile picture must be a valid URL';
+	// }
 	if (!validatePhoneNumber(values.phoneNumber)) {
 		errors.phoneNumber = 'Phone number must be a valid phone number';
 	}

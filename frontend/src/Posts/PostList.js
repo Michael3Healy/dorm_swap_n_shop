@@ -78,22 +78,22 @@ const PostList = ({ username }) => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+
+		// Remove empty search terms
 		const searchTerms = {};
 		const posterUsername = searchParams.posterUsername;
 		const itemName = searchParams.itemName;
-
 		if (posterUsername) searchTerms.posterUsername = posterUsername;
 		if (itemName) searchTerms.itemName = itemName;
 
+		// Update the URL with the search terms, triggering a re-fetch of the data from useEffect
 		const search = new URLSearchParams({ ...searchTerms }).toString();
 		navigate(`?${search}`);
 	};
 
-	if (loading) return <LoadingScreen />;
+	// if (loading) return <LoadingScreen />; // Add back in if data gets large enough to warrant loading screen
 
 	if (error) return <ErrorAlert error={error} />;
-
-	if (!posts.length) return <h1>No posts found</h1>;
 
 	return (
 		<div className='PostList'>
@@ -105,13 +105,11 @@ const PostList = ({ username }) => {
 				onChange={handleChange}
 				handleSubmit={handleSubmit}
 			/>
-
+			{posts.length === 0 && <h2>No posts found</h2>}
 			{/* Post List */}
 			<div className='PostList-posts container'>
 				{posts.map(p => (
-					<Link key={p.id} to={`/posts/${p.id}`} className='PostList-cardLink'>
-						<PostCard post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
-					</Link>
+					<PostCard post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
 				))}
 			</div>
 		</div>

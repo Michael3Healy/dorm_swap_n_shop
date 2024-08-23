@@ -9,3 +9,8 @@
 .PostCard:hover {
 	transform: scale(1.05);
 }
+
+.PostCard-cardLink {
+    text-decoration: none;
+    color: inherit;
+}

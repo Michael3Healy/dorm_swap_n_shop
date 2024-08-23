@@ -3,6 +3,8 @@
 /** Routes for users. */
 
 const jsonschema = require('jsonschema');
+const multer = require('multer');
+const path = require('path');
 
 const express = require('express');
 const { ensureCorrectUserOrAdmin, ensureAdmin, ensureLoggedIn } = require('../middleware/auth');
@@ -15,13 +17,25 @@ const userService = require('../services/userService');
 
 const router = express.Router();
 
+// Set storage options for multer
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'uploads/'); // The folder where the uploaded files will be stored
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Naming the file uniquely
+	},
+});
+
+const upload = multer({ storage: storage });
+
 /**
  * Route to update user (from profile page)
  *
  * PATCH /:username { user } => { user }
  *
  * Data can include: {email, firstName, lastName, phoneNumber, profilePicture}
- * 
+ *
  * Data must include: {password}
  *
  * Returns { username, firstName, lastName, email, phoneNumber, profilePicture }
@@ -29,8 +43,13 @@ const router = express.Router();
  * Authorization: admin or correct user
  */
 
-router.patch('/:username', ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.patch('/:username', ensureCorrectUserOrAdmin, upload.single('profilePicture'), async function (req, res, next) {
 	try {
+		// Update the request body to include the profile picture path
+		if (req.file) req.body.profilePicture = req.file.path;
+
+		console.log('req.body:', req.body);
+
 		const validator = jsonschema.validate(req.body, userUpdateSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);
@@ -77,7 +96,7 @@ router.get('/', ensureLoggedIn, async function (req, res, next) {
  * GET /:username => { user }
  *
  * Returns { username, firstName, lastName, phoneNumber, email, isAdmin, profilePicture, posts, transactions, rating, numRatings }
- * 
+ *
  * Authorization: logged in
  */
 router.get('/:username', ensureLoggedIn, async function (req, res, next) {

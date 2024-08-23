@@ -1,8 +1,15 @@
 .UserList {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1rem;
-    justify-content: center;
-	padding-top: 2rem;
+	padding: 2rem;
 }
 
+.UserList-users {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 3rem;
+	justify-content: center;
+}
+
+.UserList-cardLink {
+    text-decoration: none;
+    color: inherit;
+}

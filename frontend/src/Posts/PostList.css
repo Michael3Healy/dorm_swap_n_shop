@@ -11,8 +11,3 @@
     justify-content: center;
 }
 
-/* Style for individual post links */
-.PostList-cardLink {
-    text-decoration: none;
-    color: inherit;
-}

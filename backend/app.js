@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const path = require('path')
 
 const { NotFoundError } = require("./expressError");
 
@@ -21,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authenticateJWT);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/auth", authRoutes);
 app.use('/users', userRoutes)

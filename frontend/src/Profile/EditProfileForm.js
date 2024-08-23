@@ -15,9 +15,10 @@ const EditProfileForm = () => {
 		email: `${currUser.email}`,
 		firstName: `${currUser.firstName}`,
 		lastName: `${currUser.lastName}`,
-		profilePicture: `${currUser.profilePicture}`,
 		password: '',
 	});
+	const [selectedFile, setSelectedFile] = useState(null);
+	const handleFileChange = e => setSelectedFile(e.target.files[0]);
 
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
@@ -25,13 +26,19 @@ const EditProfileForm = () => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-            const validationErrors = validate(formData);
+			const validationErrors = validate(formData);
 			if (Object.keys(validationErrors).length > 0) {
-                setError(validationErrors); // Set the specific validation errors
-                return; // Prevent form submission if there are errors
-            }
+				setError(validationErrors); // Set the specific validation errors
+				return; // Prevent form submission if there are errors
+			}
+
+			// Create form data object to submit in order to include profile picture
+			const formDataToSubmit = new FormData();
+			Object.keys(formData).forEach(key => formDataToSubmit.append(key, formData[key]));
+			if (selectedFile) formDataToSubmit.append('profilePicture', selectedFile);
+
 			// Update user data, verify password
-			await ShopApi.updateUser(currUser.username, formData);
+			await ShopApi.updateUser(currUser.username, formDataToSubmit);
 
 			// Delete password so it doesn't get saved in context
 			delete formData.password;
@@ -50,6 +57,12 @@ const EditProfileForm = () => {
 			<div className='row justify-content-center mt-5'>
 				<div className='col-6'>
 					<form className='bg-light p-4 rounded shadow-md' onSubmit={handleSubmit}>
+						<div className='mb-4'>
+							<label htmlFor='profilePicture' className='form-label'>
+								Profile Picture
+							</label>
+							<input type='file' id='profilePicture' name='profilePicture' className='form-control' onChange={handleFileChange} />
+						</div>
 						{Object.keys(formData).map(key => (
 							<div className='mb-4' key={key}>
 								<label htmlFor={key} className='form-label required'>
@@ -58,6 +71,7 @@ const EditProfileForm = () => {
 								<input type={key === 'password' ? 'password' : 'text'} id={key} name={key} className='form-control' onChange={handleChange} value={formData[key]} required />
 							</div>
 						))}
+
 						<button type='submit' className='btn btn-primary btn-block'>
 							Submit
 						</button>

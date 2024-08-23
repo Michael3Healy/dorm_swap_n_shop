@@ -1,4 +1,5 @@
 import './PostCard.css';
+import { Link } from 'react-router-dom';
 
 const PostCard = ({ post, item, location, user }) => {
 	return (
@@ -14,7 +15,9 @@ const PostCard = ({ post, item, location, user }) => {
 				<li className='list-group-item'>Seller Rating: {user.rating}</li>
 			</ul>
 			<div className='card-body'>
-				<button className="btn btn-primary">View Details</button>
+				<Link key={post.id} to={`/posts/${post.id}`} className='PostCard-cardLink'>
+					<button className='btn btn-primary'>View Details</button>
+				</Link>
 			</div>
 		</div>
 	);
