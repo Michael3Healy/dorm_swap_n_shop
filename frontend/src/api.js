@@ -130,12 +130,12 @@ class ShopApi {
 
 	/** Create new post
 	 *
-	 * { itemId, locationId } => post
+	 * { posterUsername, itemId, locationId } => post
 	 *
 	 * where post is { id, posterUsername, itemId, locationId }
 	 */
-	static async createPost(itemId, locationId) {
-		let res = await this.request('posts', { itemId, locationId }, 'post');
+	static async createPost(posterUsername, itemId, locationId) {
+		let res = await this.request('posts', { posterUsername, itemId, locationId }, 'post');
 		return res.post;
 	}
 
@@ -175,6 +175,7 @@ class ShopApi {
 	 * { street, city, state, zip, latitude, longitude } => location
 	 */
 	static async addLocation(locationData) {
+		
 		let res = await this.request('locations', locationData, 'post');
 		return res.location;
 	}

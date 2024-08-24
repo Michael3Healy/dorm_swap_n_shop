@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const PostCard = ({ post, item, location, user }) => {
 	return (
 		<div className='card PostCard'>
-			<img src='https://tinyurl.com/2a5vsg4a' className='card-img-top' alt='...' />
+			<div className='img-container'>
+				<img src='https://tinyurl.com/2a5vsg4a' className='card-img-top' alt='...' />
+			</div>
 			<div className='card-body'>
 				<h5 className='card-title'>{item.title}</h5>
 				<p className='card-text description'>{item.description}</p>

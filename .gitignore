@@ -5,6 +5,7 @@
 /backend/*.log
 /backend/tmp
 /backend/coverage
+/backend/uploads
 
 # Frontend
 /frontend/node_modules

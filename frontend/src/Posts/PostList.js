@@ -7,13 +7,14 @@ import PostCard from './PostCard';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useFields from '../hooks/useFields';
 import SearchBar from '../common/SearchBar';
+import PlaceholderCard from '../common/PlaceholderCard';
 
 const PostList = ({ username }) => {
 	const [posts, setPosts] = useState([]);
 	const [items, setItems] = useState({});
 	const [users, setUsers] = useState({});
 	const [locations, setLocations] = useState({});
-	const [loading, setLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [searchParams, handleChange, setSearchParams] = useFields({ posterUsername: '', itemName: '' });
 
@@ -70,7 +71,7 @@ const PostList = ({ username }) => {
 			} catch (err) {
 				setError(err);
 			} finally {
-				setLoading(false);
+				setIsLoading(false);
 			}
 		};
 		fetchData();
@@ -91,27 +92,43 @@ const PostList = ({ username }) => {
 		navigate(`?${search}`);
 	};
 
-	// if (loading) return <LoadingScreen />; // Add back in if data gets large enough to warrant loading screen
-
 	if (error) return <ErrorAlert error={error} />;
 
 	return (
 		<div className='PostList'>
-			{/* Search Form */}
-			<SearchBar
-				names={username ? ['itemName'] : ['posterUsername', 'itemName']}
-				values={username ? [searchParams.itemName] : [searchParams.posterUsername, searchParams.itemName]}
-				placeholders={username ? ['Item'] : ['Username', 'Item']}
-				onChange={handleChange}
-				handleSubmit={handleSubmit}
-			/>
-			{posts.length === 0 && <h2>No posts found</h2>}
-			{/* Post List */}
-			<div className='PostList-posts container'>
-				{posts.map(p => (
-					<PostCard post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
-				))}
+			<div className='upper'>
+				{/* Search Form */}
+				<SearchBar
+					names={username ? ['itemName'] : ['posterUsername', 'itemName']}
+					values={username ? [searchParams.itemName] : [searchParams.posterUsername, searchParams.itemName]}
+					placeholders={username ? ['Item'] : ['Username', 'Item']}
+					onChange={handleChange}
+					handleSubmit={handleSubmit}
+				/>
+				<Link to='/posts/new/location' className='PostList-new-post'>
+					<button className='btn btn-success'>New Post</button>
+				</Link>
 			</div>
+			{/* Post List */}
+			{isLoading ? (
+				<div className='PostList-posts container'>
+					{Array.from({ length: 12 }).map((_, idx) => (
+						<PlaceholderCard key={idx} />
+					))}
+				</div>
+			) : (
+				<>
+					{posts.length === 0 ? (
+						<h2>No posts found</h2>
+					) : (
+						<div className='PostList-posts container'>
+							{posts.map(p => (
+								<PostCard key={p.id} post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
+							))}
+						</div>
+					)}
+				</>
+			)}
 		</div>
 	);
 };

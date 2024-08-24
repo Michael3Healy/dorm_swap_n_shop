@@ -39,11 +39,12 @@ const EditProfileForm = () => {
 
 			// Update user data, verify password
 			await ShopApi.updateUser(currUser.username, formDataToSubmit);
+			console.log('formDataToSubmit:', formDataToSubmit);
 
 			// Delete password so it doesn't get saved in context
 			delete formData.password;
 
-			setCurrUser({ ...currUser, ...formData });
+			setCurrUser({ ...currUser, ...formDataToSubmit });
 			navigate(`/users/${currUser.username}`);
 		} catch (error) {
 			setError(error);

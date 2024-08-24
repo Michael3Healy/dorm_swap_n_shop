@@ -7,20 +7,20 @@ const { sqlForPartialUpdate } = require('../helpers/sql');
 class Item {
 	/** Create a new item (from data), update db, return new item data.
 	 *
-	 * data should be { image, category, title, price, isSold, description }
+	 * data should be { image, category, title, price, description }
 	 *
 	 * Returns { id, image, category, title, price, isSold, description, ownerUsername }
 	 *
 	 * Throws BadRequestError if item already in database.
 	 **/
-	static async create({ image, category, title, price, isSold, description, ownerUsername }) {
+	static async create({ image, category, title, price, description, ownerUsername }) {
 
 		// Insert item into database
 		const result = await db.query(
-			`INSERT INTO items (image, category, title, price, is_sold, description, owner_username)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+			`INSERT INTO items (image, category, title, price, description, owner_username)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING id, image, category, title, price, is_sold AS "isSold", description, owner_username AS "ownerUsername"`,
-			[image, category, title, price, isSold, description, ownerUsername]
+			[image, category, title, price, description, ownerUsername]
 		);
 		const item = result.rows[0];
 

@@ -1,28 +1,26 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://example.com/example.json",
-    "type": "object",
-    "default": {},
-    "title": "Root Schema",
-    "required": [
-        "itemId",
-        "locationId"
-    ],
-    "properties": {
-        "itemId": {
-            "type": "integer",
-            "title": "The itemId Schema",
-            "examples": [
-                1
-            ]
-        },
-        "locationId": {
-            "type": "integer",
-            "title": "The locationId Schema",
-            "examples": [
-                1
-            ]
-        }
-    },
-    "additionalProperties": false
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"default": {},
+	"title": "Root Schema",
+	"required": ["itemId", "locationId", "posterUsername"],
+	"properties": {
+		"itemId": {
+			"type": "integer",
+			"title": "The itemId Schema",
+			"examples": [1]
+		},
+		"locationId": {
+			"type": "integer",
+			"title": "The locationId Schema",
+			"examples": [1]
+		},
+		"posterUsername": {
+			"type": "string",
+			"title": "The posterUsername Schema",
+			"examples": ["user1"]
+		}
+	},
+	"additionalProperties": false
 }

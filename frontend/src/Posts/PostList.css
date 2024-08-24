@@ -11,3 +11,12 @@
     justify-content: center;
 }
 
+.PostList .upper {
+    position: relative;
+}
+
+.PostList-new-post button {
+    position: absolute;
+    right: 25%;
+    top: 20%;
+}

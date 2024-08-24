@@ -9,7 +9,6 @@
         "category",
         "title",
         "price",
-        "isSold",
         "description"
     ],
     "properties": {

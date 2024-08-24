@@ -19,7 +19,18 @@ const { ensureLoggedIn, ensureAdmin } = require('../middleware/auth');
  * Authorization required: logged in
  */
 router.post('/', ensureLoggedIn, async function (req, res, next) {
+	console.log('req.body:', req.body);
 	try {
+		console.log('Incoming longitude:', req.body.longitude);
+		console.log('Incoming latitude:', req.body.latitude);
+
+		// Convert to float
+		req.body.longitude = parseFloat(req.body.longitude);
+		req.body.latitude = parseFloat(req.body.latitude);
+
+		// Log values after conversion
+		console.log('Converted longitude:', req.body.longitude);
+		console.log('Converted latitude:', req.body.latitude);
 		const validator = jsonschema.validate(req.body, locationNewSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);

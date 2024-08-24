@@ -32,10 +32,10 @@ const UserCard = ({ username, profilePicture }) => {
 	return (
 		<div class='UserCard container d-flex justify-content-center align-items-center'>
 			<div class='card'>
-				<div class='upper'>
+				<div class='img-container'>
 					<img src={`${BASE_URL}/${profilePicture}`} class='img-fluid profile-pic' />
 				</div>
-				<div class='mt-5 text-center'>
+				<div class='mt-0 text-center'>
 					<div className='profile-bg'>
 						<h3 class='mb-0 username'>{username}</h3>
 					</div>

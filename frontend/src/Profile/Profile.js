@@ -23,7 +23,9 @@ const Profile = () => {
 			// Set user data to current user
 			setUserProfile(currUser);
 		}
-	}, [username]);
+	}, [username, currUser]);
+
+
 
 	return (
 		<div className='Profile p-5 container'>

@@ -1,12 +1,11 @@
 import LoginForm from './Auth/LoginForm';
 import SignupForm from './Auth/SignupForm';
 import { Routes, Route } from 'react-router-dom';
-import { useContext } from 'react';
-import UserContext from './userContext';
+import NewLocationForm from './Posts/NewLocationForm';
+import NewItemForm from './Posts/NewItemForm';
 import Home from './Home/Home';
 import PostList from './Posts/PostList';
 import PostDetail from './Posts/PostDetail';
-import NewPostForm from './Posts/NewPostForm';
 import EditPostForm from './Posts/EditPostForm';
 import Profile from './Profile/Profile';
 import EditProfileForm from './Profile/EditProfileForm';
@@ -26,7 +25,8 @@ const RoutesList = ({ login, register }) => {
             <Route path='/users/:username' element={<Profile />} />
             <Route path='/users/:username/edit' element={<EditProfileForm />} />
             <Route path='/posts' element={<PostList />} />
-            <Route path='/posts/new' element={<NewPostForm />} />
+            <Route path='/posts/new/location' element={<NewLocationForm />} />
+            <Route path='/posts/new/item' element={<NewItemForm />} />
             <Route path='/posts/:id' element={<PostDetail />} />
             <Route path='/posts/:id/edit' element={<EditPostForm />} />
             <Route path='/transactions' element={<TransactionList />} />
