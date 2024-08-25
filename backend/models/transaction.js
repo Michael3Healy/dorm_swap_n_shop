@@ -9,7 +9,7 @@ class Transaction {
 	 *
 	 * data should be { post_id, buyer_username, seller_username, price }
 	 *
-	 * Returns { id, postId, buyerUsername, sellerUsername, price, transactionDate }
+	 * Returns { id, postId, buyerUsername, sellerUsername, price, transactionDate, rated }
 	 *
 	 */
 	static async create({ postId, buyerUsername, sellerUsername, price }) {
@@ -17,11 +17,32 @@ class Transaction {
 		const result = await db.query(
 			`INSERT INTO transactions (post_id, buyer_username, seller_username, price)
              VALUES ($1, $2, $3, $4)
-             RETURNING id, post_id AS "postId", buyer_username AS "buyerUsername", seller_username AS "sellerUsername", price, transaction_date AS "transactionDate"`,
+             RETURNING id, post_id AS "postId", buyer_username AS "buyerUsername", seller_username AS "sellerUsername", price, transaction_date AS "transactionDate", rated`,
 			[postId, buyerUsername, sellerUsername, price]
 		);
 
 		const transaction = result.rows[0];
+
+		return transaction;
+	}
+
+	static async get(id) {
+		const transactionRes = await db.query(
+			`SELECT id,
+					post_id AS "postId",
+					buyer_username AS "buyerUsername",
+					seller_username AS "sellerUsername",
+					price,
+					transaction_date AS "transactionDate",
+					rated
+			 FROM transactions
+			 WHERE id = $1`,
+			[id]
+		);
+
+		const transaction = transactionRes.rows[0];
+
+		if (!transaction) throw new NotFoundError(`No transaction with id: ${id}`);
 
 		return transaction;
 	}
@@ -31,7 +52,7 @@ class Transaction {
 	 *
 	 * query can include { minPrice, maxPrice, buyerUsername, sellerUsername, transactionDate }
 	 *
-	 * Returns [{ id, postId, buyerUsername, sellerUsername, price, transactionDate }, ...]
+	 * Returns [{ id, postId, buyerUsername, sellerUsername, price, transactionDate, rated }, ...]
 	 *
 	 */
 	static async findAll(username, query={}) {
@@ -82,7 +103,8 @@ class Transaction {
                     buyer_username AS "buyerUsername",
                     seller_username AS "sellerUsername",
                     price,
-                    transaction_date AS "transactionDate"
+                    transaction_date AS "transactionDate",
+					rated
              FROM transactions
              ${whereClause}
              ORDER BY id`,
@@ -94,6 +116,28 @@ class Transaction {
         }
 
 		return transactionsRes.rows;
+	}
+
+	/**
+	 * Update a transaction by id
+	 *
+	 * Returns { rated }
+	 */
+	static async update(id) {
+
+		const result = await db.query(
+			`UPDATE transactions
+			 SET rated = true
+			 WHERE id = $1
+			 RETURNING rated`,
+			[id]
+		);
+
+		const transaction = result.rows[0];
+
+		if (!transaction) throw new NotFoundError(`No transaction with id: ${id}`);
+
+		return transaction;
 	}
 }
 

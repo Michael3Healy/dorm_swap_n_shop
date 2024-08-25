@@ -9,13 +9,13 @@ const ErrorAlert = ({ error }) => {
 
 	if (typeof error === 'object') {
 		// Extract error messages from an object
-		errorMessages = Object.keys(error).map(key => <p key={key}>{error[key]}</p>);
+		errorMessages = error.message || Object.values(error).map((message, idx) => <p key={idx}>{message}</p>);
 	} else if (Array.isArray(error)) {
 		// Extract error messages from an array
 		errorMessages = error.map((message, idx) => <p key={idx}>{message}</p>);
-	} else {
-		// Single error message
-		errorMessages = <p>{error}</p>;
+	} else if (typeof error === 'string') {
+		// Display the error message as is
+		errorMessages = error;
 	}
 
 	return (

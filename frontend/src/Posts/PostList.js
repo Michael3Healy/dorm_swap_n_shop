@@ -105,9 +105,14 @@ const PostList = ({ username }) => {
 					onChange={handleChange}
 					handleSubmit={handleSubmit}
 				/>
-				<Link to='/posts/new/location' className='PostList-new-post'>
-					<button className='btn btn-success'>New Post</button>
-				</Link>
+				{/* Add Post Button */}
+				{!username && (
+					<div className='add-post'>
+						<Link to='/posts/new/location'>
+							<button className='btn btn-main btn-add'><i class="fa-solid fa-plus"></i></button>
+						</Link>
+					</div>
+				)}
 			</div>
 			{/* Post List */}
 			{isLoading ? (

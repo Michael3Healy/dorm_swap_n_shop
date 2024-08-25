@@ -11,6 +11,7 @@ import ShopApi from './api';
 function App() {
 	// Token initialized to the token stored in local storage, or an empty string if no token is found.
 	const [token, setToken] = useLocalStorage('token', '');
+	ShopApi.token = token;
 
 	const [currUser, setCurrUser] = useLocalStorage('currUser', {});
 	const [error, setError] = useState(null);

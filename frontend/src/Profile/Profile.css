@@ -16,9 +16,13 @@
     font-weight: 500;
 }
 
-#edit,
-#delete {
-    width: 100%;
+#edit {
+    width: 40%;
     padding: 10px;
     margin: 10px;
+}
+
+.Profile .button-container {
+    display: flex;
+    justify-content: end;
 }

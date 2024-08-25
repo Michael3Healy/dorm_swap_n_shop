@@ -5,6 +5,7 @@ import ErrorAlert from '../ErrorAlert';
 import ShopApi from '../api';
 import { useContext } from 'react';
 import UserContext from '../userContext';
+import './NewItemForm.css';
 
 const NewItemForm = () => {
 	const [error, setError] = useState(null);
@@ -37,7 +38,8 @@ const NewItemForm = () => {
 			await ShopApi.createPost(currUser.username, itemId, locationId);
 			navigate('/posts');
 		} catch (error) {
-			setError(error);
+			console.error(error)
+			setError('An error occurred while submitting the form, please try again');
 		}
 	};
 
@@ -45,7 +47,6 @@ const NewItemForm = () => {
 
 	return (
 		<div className='NewItemForm container'>
-			<h1>New Item Form</h1>
 			<div className='row justify-content-center'>
 				<div className='col-12 col-md-8 col-lg-6'>
 					<form onSubmit={handleSubmit} className='bg-light p-4 rounded shadow-md'>

@@ -4,7 +4,7 @@ import PostList from '../Posts/PostList';
 import './Profile.css';
 import { Link, useParams } from 'react-router-dom';
 import ShopApi from '../api';
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
 const Profile = () => {
 	const { currUser } = useContext(UserContext);
@@ -25,15 +25,13 @@ const Profile = () => {
 		}
 	}, [username, currUser]);
 
-
-
 	return (
 		<div className='Profile p-5 container'>
 			<div className='container d-flex justify-content-center'>
 				<div className='profile-card'>
 					<div className='d-flex align-items-center'>
 						<div className='image'>
-							<img src={`${BASE_URL}/${userProfile.profilePicture}`} className='rounded' width='155' />
+							<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width='155' />
 						</div>
 
 						<div className='main w-100'>
@@ -61,13 +59,10 @@ const Profile = () => {
 								<p>Email: {userProfile.email}</p>
 							</div>
 							{username === currUser.username && (
-								<div className='button mt-2 d-flex flex-row align-items-center'>
-									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-outline-primary' id='edit'>
+								<div className='mt-2 button-container'>
+									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-primary' id='edit'>
 										Edit
 									</Link>
-									<button className='btn btn-sm btn-danger' id='delete'>
-										Delete
-									</button>
 								</div>
 							)}
 						</div>

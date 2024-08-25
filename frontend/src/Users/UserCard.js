@@ -41,7 +41,6 @@ const UserCard = ({ username, profilePicture }) => {
 					</div>
 
 					<Link to={`/users/${username}`}><button class='btn btn-primary btn-sm follow mt-4 mx-3'>View Profile</button></Link>
-					<button class='btn btn-success btn-sm follow mt-4 mx-3'>Message</button>
 
 					<div class='d-flex justify-content-between align-items-center mt-3 px-4'>
 						<div class='stats'>

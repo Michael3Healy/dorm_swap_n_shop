@@ -1,9 +1,12 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoadingScreen from '../LoadingScreen';
 import ErrorAlert from '../ErrorAlert';
 import ShopApi from '../api';
 import './PostDetail.css';
+import Modal from '../common/Modal';
+import { useContext } from 'react';
+import UserContext from '../userContext';
 
 const PostDetail = () => {
 	const { id } = useParams();
@@ -13,6 +16,23 @@ const PostDetail = () => {
 	const [location, setLocation] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
+
+	const { currUser } = useContext(UserContext);
+	const navigate = useNavigate();
+
+	const [showModal, setShowModal] = useState(false);
+
+	const handleShow = () => setShowModal(true);
+	const handleClose = () => setShowModal(false);
+
+	const handlePurchase = async () => {
+		try {
+			const { id: transactionId } = await ShopApi.createTransaction(id, currUser.username, user.username, item.price);
+			navigate(`/transactions/${transactionId}`);
+		} catch (error) {
+			setError(error);
+		}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -69,14 +89,43 @@ const PostDetail = () => {
 						<div className='row mt-5'>
 							<div className='col-12'>
 								<button className='btn btn-lg btn-danger mx-2'>Ask Question</button>
-								<button className='btn btn-lg btn-primary mx-2'>Save</button>
-								<button className='btn btn-lg btn-info mx-2'>Message Seller</button>
-								<button className='btn btn-success btn-lg mx-2'>Purchase</button>
+								<button className='btn btn-success btn-lg mx-2' onClick={handleShow}>
+									Purchase
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<Modal
+				show={showModal}
+				handleClose={handleClose}
+				title='Purchase Confirmation'
+				body={
+					<>
+						<p>
+							Are you sure you want to purchase <strong>"{item.title}"</strong> for <strong>${item.price}</strong>?
+						</p>
+						<label htmlFor='paymentMethod' className='form-label'>
+							<strong>Select Payment Method</strong>
+						</label>
+						<select className='form-select mt-3' id='paymentMethod'>
+							<option value='cash'>Cash</option>
+							<option value='venmo' disabled>Venmo (not yet supported)</option>
+						</select>
+					</>
+				}
+				buttons={
+					<>
+						<button type='button' className='btn btn-outline-danger' onClick={handleClose}>
+							Cancel
+						</button>
+						<button type='button' className='btn btn-success' onClick={handlePurchase}>
+							Confirm
+						</button>
+					</>
+				}
+			/>
 		</div>
 	);
 };

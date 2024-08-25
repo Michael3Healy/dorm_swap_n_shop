@@ -2,10 +2,8 @@ import useFields from '../hooks/useFields';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorAlert from '../ErrorAlert';
-import ShopApi from '../api';
-import UserContext from '../userContext';
-import { validate } from '../helpers/formValidation';
 import { parseAddress } from '../helpers/parse';
+import { validate } from '../helpers/formValidation';
 import './NewLocationForm.css';
 
 const NewLocationForm = () => {
@@ -16,23 +14,22 @@ const NewLocationForm = () => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			// const validationErrors = validate(formData);
-			// if (Object.keys(validationErrors).length > 0) {
-			// 	setError(validationErrors);
-			// 	return;
-			// }
+			const validationErrors = validate(formData, ['pickupLocation', 'latitude', 'longitude']);
+			if (Object.keys(validationErrors).length > 0) {
+				setError(validationErrors);
+				return;
+			}
 
 			const { street, city, zip, state } = parseAddress(formData.pickupLocation);
 
 			// Append individual fields to `FormData`
 			const formDataToSubmit = { street, city, zip, state, latitude: formData.latitude, longitude: formData.longitude };
 
-			// await ShopApi.addLocation(formDataToSubmit);
-
-            // Submit the location data all at once with the next form
+			// Submit the location data all at once with the next form
 			navigate('/posts/new/item', { state: { locationData: formDataToSubmit } });
 		} catch (error) {
-			setError(error);
+			console.error(error);
+			setError('An error occurred while submitting the form, please try again');
 		}
 	};
 

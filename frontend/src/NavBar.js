@@ -41,8 +41,8 @@ const NavBar = ({ logout }) => {
 	let links = currUser.username ? loggedInLinks : anonLinks;
 
 	return (
-		<Navbar color='light' expand='md'>
-			<NavLink to='/' className='navbar-brand'>
+		<Navbar expand='md'>
+			<NavLink to='/' className='brand'>
 				Shop n' Swap
 			</NavLink>
 			{links}

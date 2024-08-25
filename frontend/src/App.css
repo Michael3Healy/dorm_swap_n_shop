@@ -4,7 +4,7 @@
 }
 
 .App-main {
-	background: linear-gradient(90deg, #7742fd, #243bec);
+	background: #2B4564;
 	min-height: calc(100vh - 60px) /* 60px is the height of the nav bar */;
 }
 

@@ -13,10 +13,29 @@
 
 .PostList .upper {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
-.PostList-new-post button {
+.PostList .btn-add {
+	background-color: #1c8ac2; /* Matches the main button color */
     position: absolute;
-    right: 25%;
-    top: 20%;
+    right: 10%;
+    top: 17%;
+	border: none;
+	border-radius: 7px; /* Makes the button round */
+	width: 40px; /* Adjust size as needed */
+	height: 40px;
+	font-size: 2rem; /* Adjust size of the `+` sign */
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+    padding: 25px;
+}
+
+.PostList .btn-add:hover {
+	background-color: #1c8ac2;
+	color: black;
 }

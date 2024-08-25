@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -8,7 +9,9 @@ class ShopApi {
 
 	// function to send a request to the API
 	static async request(endpoint, data = {}, method = 'get') {
-		console.debug('API Call:', endpoint, data, method);
+		// console.debug('API Call:', endpoint, data, method);
+		console.debug('headers', { Authorization: `Bearer ${ShopApi.token}` });
+		console.debug('token username', jwtDecode(ShopApi.token).username);
 
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${ShopApi.token}` };
@@ -232,8 +235,20 @@ class ShopApi {
 		let res = await this.request('transactions', searchParams);
 		return res.transactions;
 	}
-}
 
-ShopApi.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1oZWFseSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MjM5MTgyNDF9.6hpwhRU-TUW1y9wJnYSMaBWKdtg003L7ROSEarAgAgc';
+	/** Get transaction by id
+	 *
+	 * transactionId => { id, postId, buyerUsername, sellerUsername, price, transactionDate }
+	 */
+	static async getTransaction(transactionId) {
+		let res = await this.request(`transactions/${transactionId}`);
+		return res.transaction;
+	}
+
+	static async markTransactionAsRated(transactionId) {
+		let res = await this.request(`transactions/${transactionId}`, {}, 'patch');
+		return res;
+	}
+}
 
 export default ShopApi;

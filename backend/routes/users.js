@@ -118,6 +118,9 @@ router.get('/:username', ensureLoggedIn, async function (req, res, next) {
 
 router.patch('/:username/rating/:seller', ensureCorrectUserOrAdmin, async function (req, res, next) {
 	try {
+		// Convert the rating to a number
+		req.body.rating = +req.body.rating
+		
 		const validator = jsonschema.validate(req.body, userRatingSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);
