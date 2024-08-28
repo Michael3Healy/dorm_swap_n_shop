@@ -2,19 +2,32 @@ import { useContext, useEffect, useState } from 'react';
 import UserContext from '../userContext';
 import PostList from '../Posts/PostList';
 import './Profile.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import ShopApi from '../api';
+import StarRating from '../common/StarRating';
+import LoadingScreen from '../LoadingScreen';
+
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
 const Profile = () => {
 	const { currUser } = useContext(UserContext);
 	const { username } = useParams();
 	const [userProfile, setUserProfile] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const userData = await ShopApi.getUser(username);
-			setUserProfile(userData);
+			try {
+				const userData = await ShopApi.getUser(username);
+				setUserProfile(userData);
+			} catch (err) {
+				setError(err.response?.data?.error?.message || err.message || 'User not found');
+				navigate('/404');
+			} finally {
+				setIsLoading(false);
+			}
 		};
 		if (username !== currUser.username) {
 			// Fetch user data
@@ -23,44 +36,48 @@ const Profile = () => {
 			// Set user data to current user
 			setUserProfile(currUser);
 		}
+		setIsLoading(false);
 	}, [username, currUser]);
+
+	if (isLoading) return <LoadingScreen />;
 
 	return (
 		<div className='Profile p-5 container'>
 			<div className='container d-flex justify-content-center'>
-				<div className='profile-card'>
-					<div className='d-flex align-items-center'>
-						<div className='image'>
-							<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width='155' />
+				<div className='profile-card container'>
+					<div className='row'>
+						<div className='col-12'>
+							<div className='image'>
+								<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width={250} />
+							</div>
 						</div>
+					</div>
+					<div className='row'>
+						<div className='col-12'>
+							<h2>{userProfile.username}</h2>
 
-						<div className='main w-100'>
-							<h4 className='mb-0 mt-0'>{userProfile.username}</h4>
-
-							<div className='p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats'>
+							<div className='rounded text-white stats d-flex justify-content-center'>
 								<div className='d-flex flex-column m-2'>
 									<span className='listings'>Listings</span>
 									<span className='number1'>{userProfile.posts?.length}</span>
 								</div>
 
-								<div className='d-flex flex-column m-2'>
-									<span className='rating'>Rating</span>
-									<span className='number2'>{userProfile.rating || 'None'}</span>
-								</div>
-
-								<div className='d-flex flex-column m-2'>
-									<span className='num-ratings'>#Ratings</span>
-									<span className='number3'>{userProfile.numRatings}</span>
+								<div className='justify-content-center m-2'>
+									<span className='ratings'>Rating</span>
+									<div className='d-flex fs-3 justify-content-center'>
+										<StarRating rating={userProfile.rating || 0} />
+										<span className='num-ratings'>({userProfile.numRatings})</span>
+									</div>
 								</div>
 							</div>
-							<div className='personal p-3'>
+							<div className='personal p-2'>
 								<h5>Contact</h5>
 								<p>Phone Number: {userProfile.phoneNumber}</p>
 								<p>Email: {userProfile.email}</p>
 							</div>
 							{username === currUser.username && (
-								<div className='mt-2 button-container'>
-									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-primary' id='edit'>
+								<div className='button-container'>
+									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-primary p-2' id='edit'>
 										Edit
 									</Link>
 								</div>

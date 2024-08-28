@@ -1,6 +1,7 @@
 /* Container for the entire PostList section */
 .PostList {
-    padding-top: 2rem;
+    padding: 2rem;
+	display: grid; /* So that Error Alert can be positioned in the center */
 }
 
 /* Grid layout for posts */
@@ -18,15 +19,15 @@
 }
 
 .PostList .btn-add {
-	background-color: #1c8ac2; /* Matches the main button color */
+	background-color: #1c8ac2;
     position: absolute;
     right: 10%;
     top: 17%;
 	border: none;
-	border-radius: 7px; /* Makes the button round */
-	width: 40px; /* Adjust size as needed */
+	border-radius: 7px;
+	width: 40px;
 	height: 40px;
-	font-size: 2rem; /* Adjust size of the `+` sign */
+	font-size: 2rem;
 	color: white;
 	display: flex;
 	justify-content: center;

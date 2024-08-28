@@ -1,15 +1,26 @@
 .TransactionDetail {
     padding: 2rem;
+    display: grid; /* So that Error Alert can be positioned in the center */
 }
 
 
 .transaction-detail {
-    max-width: 800px;
+    width: 30vw;
     margin: 0 auto;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.TransactionDetail .transaction-info {
+    display: grid;
+    justify-content: center;
+    text-align: left;
+}
+
+.TransactionDetail .transaction-info p {
+    color: #1C8AC2;
 }
 
 .transaction-detail h1 {
@@ -57,7 +68,7 @@
 }
 
 .rating-section input[type='number'] {
-    width: 100%;
+    width: 60%;
     padding: 8px;
     font-size: 1rem;
     border: 1px solid #ddd;
@@ -65,12 +76,9 @@
 }
 
 .rating-section button.btn-primary {
-    padding: 10px 15px;
     font-size: 1rem;
     color: #fff;
     background-color: #007bff;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -79,7 +87,17 @@
     background-color: #0056b3;
 }
 
+.TransactionDetail button {
+    border-radius: 10px;
+}
+
 .rating-section p {
     font-size: 1rem;
     color: #28a745;
+}
+
+.rating-section p.disclaimer {
+    font-size: 1rem;
+    color: #fc0000;
+    margin-top: 10px;
 }

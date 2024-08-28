@@ -7,6 +7,8 @@ import './PostDetail.css';
 import Modal from '../common/Modal';
 import { useContext } from 'react';
 import UserContext from '../userContext';
+import Map from '../Map/Map';
+import StarRating from '../common/StarRating';
 
 const PostDetail = () => {
 	const { id } = useParams();
@@ -63,12 +65,15 @@ const PostDetail = () => {
 		fetchData();
 	}, [id]);
 
-	if (error) return <ErrorAlert error={error} />;
-
 	if (isLoading) return <LoadingScreen />;
+
+	if (error && error[0].includes('No post')) {
+		navigate('/404');
+	}
 
 	return (
 		<div className='PostDetail'>
+			{error && <ErrorAlert error={error} />}
 			<div className='container'>
 				<div className='row'>
 					<div className='col-6'>
@@ -76,22 +81,37 @@ const PostDetail = () => {
 							<img src='https://tinyurl.com/2a5vsg4a' className='img-fluid img' />
 							<div className='price-tag'>
 								<span className='currency'>$</span>
-								<span className='amount'>{item.price}</span>
+								<span className='amount'>{item?.price}</span>
 							</div>
 						</div>
 					</div>
 
 					<div className='col-6'>
-						<h1 className='mt-5'>{item.title}</h1>
-						<h2>Seller: {user.username}</h2>
-						<h2>Pickup At: {location.street}</h2>
-						<p>{item.description}</p>
-						<div className='row mt-5'>
+						<div className='row'>
 							<div className='col-12'>
-								<button className='btn btn-lg btn-danger mx-2'>Ask Question</button>
-								<button className='btn btn-success btn-lg mx-2' onClick={handleShow}>
-									Purchase
-								</button>
+								<div className='row'>
+									<div className='col-6 info-container'>
+										<h3 className='mt-5'>{item?.title}</h3>
+										<p class='badge text-bg-info'>{item?.category}</p>
+										<h4 className='seller'>{user?.username}</h4>
+										<div className='rating-container d-flex justify-content-center'>
+											<StarRating rating={user?.rating || 0} />
+											<span className='num-ratings'>({user?.numRatings})</span>
+										</div>
+										<p className='mt-3'>{item?.description}</p>
+									</div>
+									<div className='col-6 map-container'>
+										<Map locationId={post?.locationId} size='200x200' style={{ marginTop: '2rem' }} />
+										<h4>
+											Pickup At: {location?.street}, {location?.city} {location?.state}
+										</h4>
+									</div>
+								</div>
+								{currUser.username !== user?.username && (
+									<button className='btn btn-success btn-lg mt-2' onClick={handleShow}>
+										Purchase
+									</button>
+								)}
 							</div>
 						</div>
 					</div>
@@ -104,14 +124,16 @@ const PostDetail = () => {
 				body={
 					<>
 						<p>
-							Are you sure you want to purchase <strong>"{item.title}"</strong> for <strong>${item.price}</strong>?
+							Are you sure you want to purchase <strong>"{item?.title}"</strong> for <strong>${item?.price}</strong>?
 						</p>
 						<label htmlFor='paymentMethod' className='form-label'>
 							<strong>Select Payment Method</strong>
 						</label>
 						<select className='form-select mt-3' id='paymentMethod'>
 							<option value='cash'>Cash</option>
-							<option value='venmo' disabled>Venmo (not yet supported)</option>
+							<option value='venmo' disabled>
+								Venmo (not yet supported)
+							</option>
 						</select>
 					</>
 				}

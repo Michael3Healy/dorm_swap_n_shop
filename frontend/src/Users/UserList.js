@@ -55,11 +55,6 @@ const UserList = () => {
 					<UserCard
 						key={u.username}
 						username={u.username}
-						firstName={u.firstName}
-						lastName={u.lastName}
-						phoneNumber={u.phoneNumber}
-						email={u.email}
-						isAdmin={u.isAdmin}
 						profilePicture={u.profilePicture}
 					/>
 				))}

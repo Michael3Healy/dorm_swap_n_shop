@@ -20,13 +20,28 @@ const validate = (values, fieldNames) => {
 		if (fieldNames.includes('url') && !validateUrl(values.url)) {
 			errors.url = 'URL is invalid';
 		}
-		if (fieldNames.includes('address') && !validateAddress(values.address)) {
-			errors.address = 'Address is invalid';
+		// Street address validation
+		if (fieldNames.includes('street')) {
+			const streetError = validateStreetAddress(values.street.trim());
+			if (streetError) {
+				errors.street = streetError;
+			}
+		}
+		// Validate city name
+		if (fieldNames.includes('city') && !/^[A-Za-z\s\-']{2,}$/.test(values.city.trim())) {
+			errors.city = 'City name is invalid';
+		}
+		// State validation
+		if (fieldNames.includes('state') && !/^[A-Za-z]{2}$/.test(values.state)) {
+			errors.state = 'State must be a valid two-letter abbreviation';
+		}
+		// ZIP code validation
+		if (fieldNames.includes('zipCode') && !/^\d{5}(-\d{4})?$/.test(values.zipCode)) {
+			errors.zipCode = 'ZIP code is invalid';
 		}
 		return errors;
 	} catch (error) {
 		error.message = error.message || 'An error occurred while validating the form';
-		console.log('intiial error', error);
 		throw error;
 	}
 };
@@ -45,15 +60,35 @@ const validateUrl = url => {
 	return !!urlPattern.test(url);
 };
 
-const validateAddress = address => {
-	const addressPattern = /^\d+\s[\w\s]+,\s[\w\s]+,\s([A-Z]{2}|[A-Za-z\s]+),\s\d{5}(-\d{4})?$/i;
-	return !!addressPattern.test(address);
+const validatePhoneNumber = phoneNumber => {
+	// Check for optional delimiters like -, ., and spaces
+	const phonePattern = /^(\+?\d{1,4})?[\s.-]?(\(?\d{1,4}\)?)?[\s.-]?(\d{1,4})[\s.-]?(\d{1,9})$/;
+
+	// Check if the phone number matches the pattern and has at least 10 characters
+	return phoneNumber.length >= 10 && phonePattern.test(phoneNumber);
 };
 
-const validatePhoneNumber = phoneNumber => {
-	// This pattern matches phone numbers with optional delimiters like -, ., and spaces
-	const phonePattern = /^(\+?\d{1,4})?[\s.-]?(\(?\d{1,4}\)?)?[\s.-]?(\d{1,4})[\s.-]?(\d{1,9})$/;
-	return !!phonePattern.test(phoneNumber);
+// Validate general format and required characters
+const validateStreetAddress = address => {
+	const allowedCharacters = /^[\dA-Za-z\s.,-]+$/; // General format check
+	const hasNumber = /\d/; // Check for at least one number
+	const hasLetter = /[A-Za-z]/; // Check for at least one letter
+	const hasSpace = /\s/; // Check for at least one space
+
+	if (!allowedCharacters.test(address)) {
+		return 'Street address contains invalid characters';
+	}
+	if (!hasNumber.test(address)) {
+		return 'Street must include address number';
+	}
+	if (!hasLetter.test(address)) {
+		return 'Street address must include at least one letter';
+	}
+	if (!hasSpace.test(address)) {
+		return 'Street address must include at least one space';
+	}
+
+	return null; // No errors
 };
 
 export { validate };

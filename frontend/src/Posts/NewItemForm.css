@@ -1,3 +1,4 @@
 .NewItemForm {
     padding: 2rem;
+    display: grid; /* So that Error Alert can be positioned in the center */
 }

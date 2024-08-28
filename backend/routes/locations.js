@@ -10,33 +10,24 @@ const Location = require('../models/location');
 const locationNewSchema = require('../schemas/locations/locationNew.json');
 const locationSearchSchema = require('../schemas/locations/locationSearch.json');
 const { ensureLoggedIn, ensureAdmin } = require('../middleware/auth');
+const geocodingService = require('../services/geocodingService');
 
 /**
- * Route to add new location
+ * Route to geocode address and add location to database.
  *
- * POST / { street, city, state, zip, latitude, longitude } => { location }
+ * POST / { street, city, state } => { location }
  *
  * Authorization required: logged in
  */
 router.post('/', ensureLoggedIn, async function (req, res, next) {
-	console.log('req.body:', req.body);
 	try {
-		console.log('Incoming longitude:', req.body.longitude);
-		console.log('Incoming latitude:', req.body.latitude);
-
-		// Convert to float
-		req.body.longitude = parseFloat(req.body.longitude);
-		req.body.latitude = parseFloat(req.body.latitude);
-
-		// Log values after conversion
-		console.log('Converted longitude:', req.body.longitude);
-		console.log('Converted latitude:', req.body.latitude);
+		const { street, city, state } = req.body;
 		const validator = jsonschema.validate(req.body, locationNewSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);
 			throw new BadRequestError(errs);
 		}
-		const location = await Location.create(req.body);
+		const location = await geocodingService.createGeocodedLocation(street, city, state);
 		return res.json({ location });
 	} catch (err) {
 		return next(err);
@@ -44,7 +35,7 @@ router.post('/', ensureLoggedIn, async function (req, res, next) {
 });
 
 /**
- * Route to update location
+ * Route to search for locations
  *
  * GET / => { locations: [ { id, street, city, state, zip, latitude, longitude }, ...] }
  *
@@ -79,6 +70,19 @@ router.get('/:id', async function (req, res, next) {
 	try {
 		const location = await Location.get(req.params.id);
 		return res.json({ location });
+	} catch (err) {
+		return next(err);
+	}
+});
+
+router.get('/:id/map', async function (req, res, next) {
+	try {
+		const { id } = req.params;
+		const { size } = req.query;
+		const map = await geocodingService.getStaticMap({ id, size });
+
+		res.setHeader('Content-Type', 'image/png');
+		return res.send(map);
 	} catch (err) {
 		return next(err);
 	}

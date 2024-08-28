@@ -2,65 +2,56 @@ import useFields from '../hooks/useFields';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ErrorAlert from '../ErrorAlert';
-import { parseAddress } from '../helpers/parse';
 import { validate } from '../helpers/formValidation';
 import './NewLocationForm.css';
 
 const NewLocationForm = () => {
-	const [formData, handleChange] = useFields({ pickupLocation: '', latitude: '', longitude: '' });
+	const [formData, handleChange] = useFields({ street: '', city: '', state: '' });
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			const validationErrors = validate(formData, ['pickupLocation', 'latitude', 'longitude']);
+			const validationErrors = validate(formData, ['street', 'city', 'state']);
 			if (Object.keys(validationErrors).length > 0) {
 				setError(validationErrors);
 				return;
 			}
 
-			const { street, city, zip, state } = parseAddress(formData.pickupLocation);
-
-			// Append individual fields to `FormData`
-			const formDataToSubmit = { street, city, zip, state, latitude: formData.latitude, longitude: formData.longitude };
-
 			// Submit the location data all at once with the next form
-			navigate('/posts/new/item', { state: { locationData: formDataToSubmit } });
+			navigate('/posts/new/item', { state: { locationData: formData } });
 		} catch (error) {
 			console.error(error);
 			setError('An error occurred while submitting the form, please try again');
 		}
 	};
 
-	if (error) return <ErrorAlert error={error} />;
-
 	return (
 		<div className='NewLocationForm container'>
-			<div className='row justify-content-center'>
+			{error && <ErrorAlert error={error} />}
+			<div className='row justify-content-center mt-3'>
 				<div className='col-12 col-md-8 col-lg-6'>
 					<form className='bg-light p-4 rounded shadow-md' onSubmit={handleSubmit}>
 						<div className='mb-4'>
-							<div className='col-12 mb-4'>
-								<label htmlFor='pickupLocation' className='form-label required'>
-									Pickup Location (format as "123 Main St, City, State, Zip")
-								</label>
-								<input type='text' id='pickupLocation' name='pickupLocation' className='form-control' onChange={handleChange} value={formData.pickupLocation} required />
-							</div>
-							<div className='col-12 mb-4'>
-								<label htmlFor='latitude' className='form-label required'>
-									Latitude
-								</label>
-								<input type='number' step='any' id='latitude' name='latitude' className='form-control' onChange={handleChange} value={formData.latitude} required />
-							</div>
-							<div className='col-12 mb-4'>
-								<label htmlFor='longitude' className='form-label required'>
-									Longitude
-								</label>
-								<input type='number' step='any' id='longitude' name='longitude' className='form-control' onChange={handleChange} value={formData.longitude} required />
-							</div>
+							<p className='text-center fs-2'>Pickup Location</p>
 						</div>
-						<button type='submit' className='btn btn-secondary btn-block'>
+						<div className='form-group'>
+							<label htmlFor='street'>Street</label>
+							<input type='text' className='form-control' id='street' name='street' placeholder='123 Main St.' onChange={handleChange} value={formData.street} required />
+						</div>
+						<div className='form-group'>
+							<label htmlFor='city'>City</label>
+							<input type='text' className='form-control' id='city' name='city' placeholder='San Francisco' onChange={handleChange} value={formData.city} required />
+						</div>
+						<div className='form-group'>
+							<label htmlFor='state'>State</label>
+							<input type='text' className='form-control' id='state' name='state' placeholder='CA' onChange={handleChange} value={formData.state} maxLength={2} required />
+						</div>
+						<button type='button' className='btn btn-cancel mt-4' onClick={() => navigate(-1)}>
+							Cancel
+						</button>
+						<button type='submit' className='btn btn-secondary mt-4'>
 							Next
 						</button>
 					</form>

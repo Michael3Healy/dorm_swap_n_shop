@@ -8,17 +8,17 @@ const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expres
 class Location {
 	/** Create a location (from data), update db, return new location data.
 	 *
-	 * data should be { latitude, longitude, street, city, state, zip }
+	 * data should be { latitude, longitude, street, city, state }
 	 *
-	 * Returns { id, street, city, state, zip, latitude, longitude }
+	 * Returns { id, street, city, state,  latitude, longitude }
 	 **/
 
-	static async create({ street, city, state, zip, latitude, longitude }) {
+	static async create(street, city, state, latitude, longitude ) {
 		const result = await db.query(
-			`INSERT INTO locations (street, city, state, zip, latitude, longitude)
-             VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING id, street, city, state, zip, latitude, longitude`,
-			[street, city, state, zip, latitude, longitude]
+			`INSERT INTO locations (street, city, state, latitude, longitude)
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING id, street, city, state,  latitude, longitude`,
+			[street, city, state, latitude, longitude]
 		);
 		const location = result.rows[0];
 
@@ -33,14 +33,13 @@ class Location {
 	 * - city (case-insensitive, partial matches)
 	 * - state (case-insensitive, partial matches)
 	 * 
-	 * Returns [{ id, street, city, state, zip, latitude, longitude }, ...]
+	 * Returns [{ id, street, city, state, latitude, longitude }, ...]
 	 */
 	static async findAll(searchFilters = {}) {
 		let query = `SELECT id,
 							street,
 							city,
 							state,
-							zip,
 							latitude,
 							longitude
 					 FROM locations`;
@@ -77,7 +76,7 @@ class Location {
 
 	/** Get location by id
 	 * 
-	 * Returns { id, street, city, state, zip, latitude, longitude }
+	 * Returns { id, street, city, state, latitude, longitude }
 	 */
 	static async get(id) {
 		const locationRes = await db.query(
@@ -85,7 +84,6 @@ class Location {
 					street,
 					city,
 					state,
-					zip,
 					latitude,
 					longitude
 			 FROM locations

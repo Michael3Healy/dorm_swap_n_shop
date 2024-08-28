@@ -4,6 +4,8 @@ import './SignupForm.css';
 import ErrorAlert from '../ErrorAlert';
 import { useState } from 'react';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
+
 const SignupForm = ({ register }) => {
 	const [formData, handleChange] = useFields({ username: '', password: '', firstName: '', lastName: '', email: '', isAdmin: false, phoneNumber: '', profilePicture: '' });
 	const [error, setError] = useState(null);
@@ -12,7 +14,7 @@ const SignupForm = ({ register }) => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			if (!formData.profilePicture) formData.profilePicture = 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login'
+			if (!formData.profilePicture) formData.profilePicture = `uploads/default-pic.png`
 			await register(formData);
 			navigate('/');
 		} catch (err) {

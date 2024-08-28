@@ -9,9 +9,7 @@ class ShopApi {
 
 	// function to send a request to the API
 	static async request(endpoint, data = {}, method = 'get') {
-		// console.debug('API Call:', endpoint, data, method);
-		console.debug('headers', { Authorization: `Bearer ${ShopApi.token}` });
-		console.debug('token username', jwtDecode(ShopApi.token).username);
+		console.debug('API Call:', endpoint, data, method);
 
 		const url = `${BASE_URL}/${endpoint}`;
 		const headers = { Authorization: `Bearer ${ShopApi.token}` };
@@ -175,10 +173,9 @@ class ShopApi {
 
 	/** Add new location
 	 *
-	 * { street, city, state, zip, latitude, longitude } => location
+	 * { street, city, state } => location
 	 */
 	static async addLocation(locationData) {
-		
 		let res = await this.request('locations', locationData, 'post');
 		return res.location;
 	}

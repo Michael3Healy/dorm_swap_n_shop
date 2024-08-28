@@ -30,31 +30,31 @@ const UserCard = ({ username, profilePicture }) => {
 	if (isLoading) return <LoadingScreen />;
 
 	return (
-		<div class='UserCard container d-flex justify-content-center align-items-center'>
-			<div class='card'>
-				<div class='img-container'>
-					<img src={`${BASE_URL}/${profilePicture}`} class='img-fluid profile-pic' />
+		<div className='UserCard container d-flex justify-content-center align-items-center'>
+			<div className='card'>
+				<div className='img-container'>
+					<img src={`${BASE_URL}/${user.profilePicture}`} className='img-fluid profile-pic' />
 				</div>
-				<div class='mt-0 text-center'>
+				<div className='mt-0 text-center'>
 					<div className='profile-bg'>
-						<h3 class='mb-0 username'>{username}</h3>
+						<h3 className='mb-0 username'>{username}</h3>
 					</div>
 
-					<Link to={`/users/${username}`}><button class='btn btn-primary btn-sm follow mt-4 mx-3'>View Profile</button></Link>
+					<Link to={`/users/${username}`}><button className='btn btn-primary btn-sm follow mt-4 mx-3'>View Profile</button></Link>
 
-					<div class='d-flex justify-content-between align-items-center mt-3 px-4'>
-						<div class='stats'>
-							<h6 class='mb-0'>Current Listings</h6>
+					<div className='d-flex justify-content-between align-items-center mt-3 px-4'>
+						<div className='stats'>
+							<h6 className='mb-0'>Current Listings</h6>
 							<span>{user.posts.length}</span>
 						</div>
 
-						<div class='stats'>
-							<h6 class='mb-0'>Rating</h6>
+						<div className='stats'>
+							<h6 className='mb-0'>Rating</h6>
 							<span>{user.rating || 'None'}</span>
 						</div>
 
-						<div class='stats'>
-							<h6 class='mb-0'>#Ratings</h6>
+						<div className='stats'>
+							<h6 className='mb-0'>#Ratings</h6>
 							<span>{user.numRatings}</span>
 						</div>
 					</div>

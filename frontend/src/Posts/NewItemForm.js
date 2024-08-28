@@ -38,15 +38,13 @@ const NewItemForm = () => {
 			await ShopApi.createPost(currUser.username, itemId, locationId);
 			navigate('/posts');
 		} catch (error) {
-			console.error(error)
-			setError('An error occurred while submitting the form, please try again');
+			setError('An error occurred while submitting the form, please make sure information is correct and try again');
 		}
 	};
 
-	if (error) return <ErrorAlert error={error} />;
-
 	return (
 		<div className='NewItemForm container'>
+			{error && <ErrorAlert error={error} />}
 			<div className='row justify-content-center'>
 				<div className='col-12 col-md-8 col-lg-6'>
 					<form onSubmit={handleSubmit} className='bg-light p-4 rounded shadow-md'>
@@ -82,6 +80,7 @@ const NewItemForm = () => {
 								<input type='text' id='category' name='category' className='form-control' onChange={handleChange} value={formData.category} required />
 							</div>
 							<div className='col-12'>
+								<button type='button' className='btn btn-outline-danger mx-3' onClick={() => navigate(-1)}>Go Back</button>
 								<button className='btn btn-success'>Submit</button>
 							</div>
 						</div>

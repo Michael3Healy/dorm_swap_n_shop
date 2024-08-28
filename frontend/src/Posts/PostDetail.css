@@ -5,6 +5,13 @@
 
 .PostDetail {
 	padding: 2rem;
+	display: grid;
+}
+
+.PostDetail .info-container {
+	background-color: rgb(240, 240, 240);
+	padding: 1rem;
+	border-radius: 5px;
 }
 
 .PostDetail .image-container {
@@ -12,22 +19,35 @@
 	display: inline-block;
 }
 
+.PostDetail .map-container {
+	background-color: #d1e7f2;
+	border-radius: 5px;
+}
+
+.borders {
+	border: 2px solid black;
+}
+
+.borders-red {
+	border: 2px solid red;
+}
+
 .PostDetail .image-container img {
-	width: 100%; /* Ensure the image fills the container */
-	border-radius: 5px; /* Optional: add rounded corners to the image */
+	width: 100%;
+	border-radius: 5px;
 }
 
 .PostDetail .price-tag {
 	position: absolute;
-	top: 10px; /* Adjust this to move the tag down/up */
-	right: 10px; /* Adjust this to move the tag left/right */
+	top: 10px;
+	right: 10px;
 	padding: 10px 20px;
 	background-color: #45d033;
 	color: #fff;
 	font-weight: bold;
 	border-radius: 5px 5px 5px 0;
 	font-size: 1.5rem;
-	z-index: 1; /* Ensures the price tag is on top of the image */
+	z-index: 1;
 }
 
 .PostDetail .price-tag:before {

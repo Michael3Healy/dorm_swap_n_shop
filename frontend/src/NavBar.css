@@ -9,24 +9,16 @@ nav {
 	text-align: center;
 }
 
-.logout:hover {
-	color: red;
-	cursor: pointer;
-}
-
 nav a {
 	color: white;
 	text-decoration: none;
+	cursor: pointer;
 }
 
-nav a.active {
+nav a.active:not(.logout) {
 	color: white;
 	font-weight: bold;
 	border-bottom: 5px dotted;
-}
-
-nav a:not(.brand):hover {
-	color: black !important;
 }
 
 nav a:hover {
@@ -44,4 +36,5 @@ nav a.brand {
 
 nav a:not(.brand):hover {
 	font-weight: bold;
+	color: black !important;
 }

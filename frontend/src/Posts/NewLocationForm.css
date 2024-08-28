@@ -1,3 +1,18 @@
 .NewLocationForm {
     padding: 2rem;
+    display: grid;
+}
+
+.NewLocationForm #state {
+    text-transform: uppercase;
+}
+
+.NewLocationForm .btn-cancel {
+    margin-right: 1rem;
+    background-color: rgb(240, 38, 38);
+    color: white;
+}
+
+.NewLocationForm .btn-cancel:hover {
+    background-color: rgb(255, 0, 0);
 }

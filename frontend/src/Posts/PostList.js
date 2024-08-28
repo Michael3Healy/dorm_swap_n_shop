@@ -36,15 +36,22 @@ const PostList = ({ username }) => {
 				if (username) searchTerms.posterUsername = username;
 
 				const posts = await ShopApi.getPosts(searchTerms);
-				setPosts(posts);
+
+				const activePosts = [];
 
 				// Fetch items for each post
 				const items = {};
-				for (let post of posts) {
-					const item = await ShopApi.getItem(post.itemId);
-					items[post.itemId] = item;
-				}
+				await Promise.all(
+					posts.map(async post => {
+						const item = await ShopApi.getItem(post.itemId);
+						if (!item.isSold) {
+							items[post.itemId] = item;
+							activePosts.push(post);
+						}
+					})
+				);
 				setItems(items);
+				setPosts(activePosts);
 
 				// Fetch locations for each post
 				const locations = {};
@@ -92,10 +99,9 @@ const PostList = ({ username }) => {
 		navigate(`?${search}`);
 	};
 
-	if (error) return <ErrorAlert error={error} />;
-
 	return (
 		<div className='PostList'>
+			{error && <ErrorAlert error={error} />}
 			<div className='upper'>
 				{/* Search Form */}
 				<SearchBar
@@ -109,7 +115,9 @@ const PostList = ({ username }) => {
 				{!username && (
 					<div className='add-post'>
 						<Link to='/posts/new/location'>
-							<button className='btn btn-main btn-add'><i class="fa-solid fa-plus"></i></button>
+							<button className='btn btn-main btn-add'>
+								<i class='fa-solid fa-plus'></i>
+							</button>
 						</Link>
 					</div>
 				)}

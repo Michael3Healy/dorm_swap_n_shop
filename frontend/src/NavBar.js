@@ -20,7 +20,7 @@ const NavBar = ({ logout }) => {
 				<NavLink to={`/users/${currUser.username}`}>Profile</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/' onClick={logout}>
+				<NavLink to='/' onClick={logout} className='logout'>
 					Logout
 				</NavLink>
 			</NavItem>
