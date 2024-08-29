@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoadingScreen from '../LoadingScreen';
 import ErrorAlert from '../ErrorAlert';
@@ -67,6 +67,7 @@ const PostDetail = () => {
 			}
 		};
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	if (isLoading) return <LoadingScreen />;
@@ -78,7 +79,7 @@ const PostDetail = () => {
 				<div className='row'>
 					<div className='col'>
 						<div className='image-container'>
-							<img src={`${BASE_URL}/${item.image}` || `${BASE_URL}/default-image.png`} className='img-fluid img' />
+							<img src={`${BASE_URL}/${item.image}` || `${BASE_URL}/default-image.png`} className='img-fluid img' alt='...' />
 							<div className='price-tag'>
 								<span className='currency'>$</span>
 								<span className='amount'>{item?.price}</span>

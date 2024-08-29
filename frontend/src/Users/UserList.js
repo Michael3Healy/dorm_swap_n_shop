@@ -1,16 +1,15 @@
 import ErrorAlert from '../ErrorAlert';
-import LoadingScreen from '../LoadingScreen';
 import UserCard from './UserCard';
 import './UserList.css';
 import { useState, useEffect } from 'react';
 import ShopApi from '../api';
 import SearchBar from '../common/SearchBar';
 import useFields from '../hooks/useFields';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const UserList = () => {
 	const [users, setUsers] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	// const [isLoading, setIsLoading] = useState(true); // Add back in if data gets large enough to warrant loading screen
 	const [error, setError] = useState(null);
 	const [searchParams, handleChange, setSearchParams] = useFields({ username: '' });
 
@@ -31,10 +30,11 @@ const UserList = () => {
 			} catch (error) {
 				setError(error);
 			} finally {
-				setIsLoading(false);
+				// setIsLoading(false);
 			}
 		};
 		getUsers();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location.search]);
 
 	const handleSubmit = async e => {

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 const TransactionCard = ({ id }) => {
 	const [transaction, setTransaction] = useState(null);
-	const [item, setItem] = useState(null);
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -18,10 +17,6 @@ const TransactionCard = ({ id }) => {
 				const transactionData = await ShopApi.getTransaction(id);
 				setTransaction(transactionData);
 
-				const postData = await ShopApi.getPost(transactionData.postId);
-
-				const itemData = await ShopApi.getItem(postData.itemId);
-				setItem(itemData);
 			} catch (error) {
 				setError(error);
 			} finally {
@@ -30,7 +25,7 @@ const TransactionCard = ({ id }) => {
 		};
 
 		fetchTransaction();
-	}, []);
+	}, [id]);
 
 	if (isLoading) return <LoadingScreen />;
 

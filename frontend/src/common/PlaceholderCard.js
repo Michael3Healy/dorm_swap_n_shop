@@ -5,7 +5,7 @@ const PlaceholderCard = () => {
 	return (
 		<div className='card PostCard'>
 			<div className='img-container'>
-				<img src={`${BASE_URL}/uploads/default-pic.png`} className='card-img-top' />
+				<img src={`${BASE_URL}/uploads/default-pic.png`} className='card-img-top' alt='...' />
 			</div>
 			<div className='card-body'>
 				<h5 className='card-title'>Loading...</h5>

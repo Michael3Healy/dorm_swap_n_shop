@@ -37,18 +37,20 @@ const Profile = () => {
 			setUserProfile(currUser);
 		}
 		setIsLoading(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [username, currUser]);
 
 	if (isLoading) return <LoadingScreen />;
 
 	return (
 		<div className='Profile p-5 container'>
+			{error && <div className='alert alert-danger'>{error}</div>}
 			<div className='container d-flex justify-content-center'>
 				<div className='profile-card container'>
 					<div className='row'>
 						<div className='col-12'>
 							<div className='image'>
-								<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width={250} />
+								<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width={250} alt='...' />
 							</div>
 						</div>
 					</div>

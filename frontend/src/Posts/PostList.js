@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import ShopApi from '../api';
 import './PostList.css';
-import LoadingScreen from '../LoadingScreen';
 import ErrorAlert from '../ErrorAlert';
 import PostCard from './PostCard';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -82,6 +81,7 @@ const PostList = ({ username }) => {
 			}
 		};
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location.search]);
 
 	const handleSubmit = async e => {
