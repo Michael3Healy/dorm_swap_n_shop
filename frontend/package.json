@@ -6,6 +6,8 @@
 		"@emotion/react": "^11.13.0",
 		"@emotion/styled": "^11.13.0",
 		"@fortawesome/fontawesome-free": "^6.6.0",
+		"@babel/core": "^7.25.2",
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@mui/icons-material": "^5.16.7",
 		"@mui/material": "^5.16.7",
 		"axios": "^1.7.4",
@@ -51,8 +53,6 @@
 		]
 	},
 	"devDependencies": {
-		"@babel/core": "^7.25.2",
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@babel/preset-env": "^7.25.4",
 		"@babel/preset-react": "^7.24.7",
 		"@testing-library/jest-dom": "^6.4.8",
