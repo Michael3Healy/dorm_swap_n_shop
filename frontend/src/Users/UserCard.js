@@ -33,7 +33,7 @@ const UserCard = ({ username, profilePicture }) => {
 		<div className='UserCard container d-flex justify-content-center align-items-center'>
 			<div className='card'>
 				<div className='img-container'>
-					<img src={`${BASE_URL}/${user.profilePicture}`} className='img-fluid profile-pic' />
+					<img src={`${BASE_URL}/${user.profilePicture}`} className='img-fluid profile-pic' alt='testUser'/>
 				</div>
 				<div className='mt-0 text-center'>
 					<div className='profile-bg'>

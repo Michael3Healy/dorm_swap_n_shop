@@ -11,7 +11,7 @@ const MyModal = ({ show, handleClose, title, body, buttons }) => {
 						<button type='button' className='btn-close' onClick={handleClose}></button>
 					</div>
 					<div className='modal-body'>
-						<p>{body}</p>
+						<div>{body}</div>
 					</div>
 					<div className='modal-footer'>
                         {buttons}

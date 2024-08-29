@@ -4,13 +4,7 @@
     "type": "object",
     "default": {},
     "title": "Root Schema",
-    "required": [
-        "minPrice",
-        "maxPrice",
-        "buyerUsername",
-        "sellerUsername",
-        "transactionDate"
-    ],
+    "required": [],
     "properties": {
         "minPrice": {
             "type": "number",

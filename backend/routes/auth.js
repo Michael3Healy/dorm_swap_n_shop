@@ -3,6 +3,8 @@
 /** Routes for authentication. */
 
 const jsonschema = require("jsonschema");
+const multer = require('multer');
+const path = require('path');
 
 const User = require("../models/user");
 const express = require("express");
@@ -11,6 +13,19 @@ const { createToken } = require("../helpers/tokens");
 const userAuthSchema = require("../schemas/auth/userAuth.json");
 const userRegisterSchema = require("../schemas/auth/userRegister.json");
 const { BadRequestError } = require("../expressError");
+
+// Set storage options for multer
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'uploads/'); // The folder where the uploaded files will be stored
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Naming the file uniquely
+	},
+});
+
+// Set up multer to use the storage options
+const upload = multer({ storage: storage });
 
 /** POST /auth/token:  { username, password } => { token }
  *
@@ -48,7 +63,7 @@ router.post("/token", async function (req, res, next) {
  * Authorization required: none
  */
 
-router.post("/register", async function (req, res, next) {
+router.post("/register", upload.single('profilePicture'), async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, userRegisterSchema);
     if (!validator.valid) {
@@ -56,7 +71,9 @@ router.post("/register", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const newUser = await User.register({ ...req.body, isAdmin: false });
+    const profilePicture = req.file ? req.file.path : req.body.profilePicture;
+
+    const newUser = await User.register({ ...req.body, profilePicture, isAdmin: false });
     const token = createToken(newUser);
     return res.status(201).json({ token });
   } catch (err) {

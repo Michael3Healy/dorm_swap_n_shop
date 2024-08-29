@@ -59,6 +59,7 @@ class Transaction {
 		let whereExpressions = [];
 		let queryValues = [username];
 		let i = 2;
+		
 
 		if (query.minPrice !== undefined) {
 			queryValues.push(query.minPrice);
@@ -95,7 +96,11 @@ class Transaction {
 		let whereClause = whereExpressions.join(' AND ');
 		if (whereClause.length > 0) {
 			whereClause = 'WHERE ' + whereClause;
+		
 		}
+		console.log('whereClause', whereClause);
+		console.log('queryValues', queryValues);
+		console.log('username', username);
 
 		const transactionsRes = await db.query(
 			`SELECT id,

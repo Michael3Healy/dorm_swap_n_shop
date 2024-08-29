@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+const axios = require('axios');
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -18,6 +17,7 @@ class ShopApi {
 		try {
 			return (await axios({ url, method, data, params, headers })).data;
 		} catch (err) {
+			console.log(err)
 			console.error('API Error:', err.response);
 			let message = err.response.data.error.message;
 			throw Array.isArray(message) ? message : [message];
@@ -116,6 +116,11 @@ class ShopApi {
 	static async updateItem(itemId, itemData) {
 		let res = await this.request(`items/${itemId}`, itemData, 'patch');
 		return res.item;
+	}
+
+	static async markItemSold(itemId) {
+		let res = await this.request(`items/${itemId}`, { isSold: true }, 'patch');
+		return res.message;
 	}
 
 	/** Delete an item

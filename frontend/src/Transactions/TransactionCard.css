@@ -1,0 +1,38 @@
+.TransactionCard {
+    padding: 2rem;
+    display: grid; /* So that Error Alert can be positioned in the center */
+}
+
+
+.TransactionCard .transaction-card {
+    display: grid;
+    width: 30vw;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.TransactionCard .transaction-info {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
+
+
+.transaction-detail h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.transaction-detail p {
+    font-size: 1rem;
+    color: #dedede;
+    margin-bottom: 10px;
+}
+
+.transaction-detail p strong {
+    color: #333;
+}

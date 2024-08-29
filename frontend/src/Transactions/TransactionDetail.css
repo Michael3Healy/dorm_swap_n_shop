@@ -3,6 +3,10 @@
     display: grid; /* So that Error Alert can be positioned in the center */
 }
 
+.TransactionDetail .successful-rating {
+    color: #28a745;
+}
+
 
 .transaction-detail {
     width: 30vw;

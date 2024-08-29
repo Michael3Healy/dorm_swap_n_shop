@@ -21,7 +21,7 @@ const ErrorAlert = ({ error }) => {
 	return (
 		<div className='ErrorAlert'>
 			<h2>Error</h2>
-			<p>{errorMessages}</p>
+			<div>{errorMessages}</div>
 		</div>
 	);
 };

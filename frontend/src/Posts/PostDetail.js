@@ -10,6 +10,8 @@ import UserContext from '../userContext';
 import Map from '../Map/Map';
 import StarRating from '../common/StarRating';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
+
 const PostDetail = () => {
 	const { id } = useParams();
 	const [post, setPost] = useState(null);
@@ -30,6 +32,7 @@ const PostDetail = () => {
 	const handlePurchase = async () => {
 		try {
 			const { id: transactionId } = await ShopApi.createTransaction(id, currUser.username, user.username, item.price);
+			await ShopApi.markItemSold( item.id );
 			navigate(`/transactions/${transactionId}`);
 		} catch (error) {
 			setError(error);
@@ -41,6 +44,7 @@ const PostDetail = () => {
 			try {
 				// Returns { id, posterUsername, itemId, locationId, postedAt }
 				const postData = await ShopApi.getPost(id);
+				if (!postData) navigate('/404')
 				setPost(postData);
 
 				// Returns { id, image, category, title, price, isSold, description, ownerUsername }
@@ -67,18 +71,14 @@ const PostDetail = () => {
 
 	if (isLoading) return <LoadingScreen />;
 
-	if (error && error[0].includes('No post')) {
-		navigate('/404');
-	}
-
 	return (
 		<div className='PostDetail'>
 			{error && <ErrorAlert error={error} />}
 			<div className='container'>
 				<div className='row'>
-					<div className='col-6'>
+					<div className='col'>
 						<div className='image-container'>
-							<img src='https://tinyurl.com/2a5vsg4a' className='img-fluid img' />
+							<img src={`${BASE_URL}/${item.image}` || `${BASE_URL}/default-image.png`} className='img-fluid img' />
 							<div className='price-tag'>
 								<span className='currency'>$</span>
 								<span className='amount'>{item?.price}</span>
@@ -86,13 +86,13 @@ const PostDetail = () => {
 						</div>
 					</div>
 
-					<div className='col-6'>
+					<div className='col'>
 						<div className='row'>
 							<div className='col-12'>
 								<div className='row'>
 									<div className='col-6 info-container'>
 										<h3 className='mt-5'>{item?.title}</h3>
-										<p class='badge text-bg-info'>{item?.category}</p>
+										<p className='badge text-bg-info'>{item?.category}</p>
 										<h4 className='seller'>{user?.username}</h4>
 										<div className='rating-container d-flex justify-content-center'>
 											<StarRating rating={user?.rating || 0} />

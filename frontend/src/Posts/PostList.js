@@ -116,7 +116,7 @@ const PostList = ({ username }) => {
 					<div className='add-post'>
 						<Link to='/posts/new/location'>
 							<button className='btn btn-main btn-add'>
-								<i class='fa-solid fa-plus'></i>
+								<i className='fa-solid fa-plus'></i>
 							</button>
 						</Link>
 					</div>
@@ -126,7 +126,7 @@ const PostList = ({ username }) => {
 			{isLoading ? (
 				<div className='PostList-posts container'>
 					{Array.from({ length: 12 }).map((_, idx) => (
-						<PlaceholderCard key={idx} />
+						<PlaceholderCard key={idx}/>
 					))}
 				</div>
 			) : (

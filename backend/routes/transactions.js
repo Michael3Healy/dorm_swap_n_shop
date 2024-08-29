@@ -80,7 +80,8 @@ router.get('/', ensureLoggedIn, async function (req, res, next) {
 			throw new BadRequestError(errs);
 		}
 		const username = res.locals.user.username;
-		const transactions = await transactionService.findAllTransactions(q, username);
+		console.log('routes username', username);
+		const transactions = await transactionService.findAllTransactions(username, q);
 		return res.json({ transactions });
 	} catch (err) {
 		return next(err);

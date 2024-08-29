@@ -3,19 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import './SignupForm.css';
 import ErrorAlert from '../ErrorAlert';
 import { useState } from 'react';
-
-const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
+import { validate } from '../helpers/formValidation';
 
 const SignupForm = ({ register }) => {
-	const [formData, handleChange] = useFields({ username: '', password: '', firstName: '', lastName: '', email: '', isAdmin: false, phoneNumber: '', profilePicture: '' });
+	const [formData, handleChange] = useFields({ username: '', password: '', firstName: '', lastName: '', email: '', phoneNumber: ''});
 	const [error, setError] = useState(null);
+	const [selectedFile, setSelectedFile] = useState(null);
+	const handleFileChange = e => setSelectedFile(e.target.files[0]);
 	const navigate = useNavigate();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			if (!formData.profilePicture) formData.profilePicture = `uploads/default-pic.png`
-			await register(formData);
+			const validationErrors = validate(formData, ['phoneNumber', 'email', 'firstName', 'lastName', 'password']);
+			if (Object.keys(validationErrors).length > 0) {
+				setError(validationErrors); // Set the specific validation errors
+				return; // Prevent form submission if there are errors
+			}
+
+			// Create form data object to submit in order to include profile picture
+			const formDataToSubmit = new FormData();
+			Object.keys(formData).forEach(key => formDataToSubmit.append(key, formData[key]));
+			if (selectedFile) {
+				formDataToSubmit.append('profilePicture', selectedFile);
+			 } else {
+				formDataToSubmit.append('profilePicture', 'uploads/default-pic.png');
+			 } 
+			await register(formDataToSubmit);
 			navigate('/');
 		} catch (err) {
 			setError(err);
@@ -28,7 +42,7 @@ const SignupForm = ({ register }) => {
 		<div className='SignupForm container'>
 			<div className='row justify-content-center mt-5'>
 				<div className='col-6'>
-					<form className='bg-light p-4 rounded shadow-md' onSubmit={handleSubmit}>
+					<form className='bg-light p-4 rounded shadow-md' onSubmit={handleSubmit} data-testid='signup-form'>
 						<div className='mb-4'>
 							<label htmlFor='username' className='form-label required'>
 								Username
@@ -69,7 +83,7 @@ const SignupForm = ({ register }) => {
 							<label htmlFor='profilePicture' className='form-label'>
 								Profile Picture
 							</label>
-							<input type='url' id='profilePicture' name='profilePicture' className='form-control' onChange={handleChange} value={formData.profilePicture} />
+							<input type='file' id='profilePicture' name='profilePicture' className='form-control' onChange={handleFileChange} />
 						</div>
 						<button type='submit' className='btn btn-primary btn-block'>
 							Submit

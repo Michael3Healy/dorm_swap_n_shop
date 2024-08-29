@@ -77,7 +77,7 @@ const Profile = () => {
 							</div>
 							{username === currUser.username && (
 								<div className='button-container'>
-									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-primary p-2' id='edit'>
+									<Link to={`/users/${currUser.username}/edit`} className='btn btn-sm btn-primary p-2' id='edit' data-testid='edit-link'>
 										Edit
 									</Link>
 								</div>

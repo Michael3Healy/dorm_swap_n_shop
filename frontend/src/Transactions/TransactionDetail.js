@@ -9,7 +9,7 @@ const TransactionDetail = () => {
 	const [transaction, setTransaction] = useState(null);
 	const [item, setItem] = useState(null);
 	const [error, setError] = useState(null);
-	const [rating, setRating] = useState(null);
+	const [rating, setRating] = useState('');
 	const [alreadyRated, setAlreadyRated] = useState(false);
 	const { transactionId } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +56,6 @@ const TransactionDetail = () => {
 			await ShopApi.markTransactionAsRated(transactionId);
 			setAlreadyRated(true);
 		} catch (error) {
-			console.error('Error submitting rating:', error);
 			setError(error);
 		}
 	};
@@ -96,14 +95,14 @@ const TransactionDetail = () => {
 					<h2>Rate the Seller</h2>
 					{!alreadyRated && <p className='disclaimer'>Please wait until you have received the item to rate the seller.</p>}
 					{alreadyRated ? (
-						<p>You have already rated this transaction. Thank you!</p>
+						<p className='successful-rating'>You have already rated this transaction. Thank you!</p>
 					) : (
 						<form onSubmit={handleSubmit}>
 							<div className='form-group'>
 								<label htmlFor='rating' className='mx-2'>
 									Rating (1-5):
 								</label>
-								<input type='number' transactionId='rating' name='rating' min='1' max='5' value={rating} onChange={handleRatingChange} />
+								<input type='number' id='rating' name='rating' min='1' max='5' value={rating} onChange={handleRatingChange} />
 							</div>
 							<div className='justify-content-center d-flex'>
 								<button type='button' className='btn btn-secondary mx-3' onClick={() => navigate('/')}>

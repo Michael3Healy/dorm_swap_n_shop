@@ -17,6 +17,9 @@ const NavBar = ({ logout }) => {
 				<NavLink to='/users' end>Users</NavLink>
 			</NavItem>
 			<NavItem>
+				<NavLink to='/transactions' end>Transactions</NavLink>
+			</NavItem>
+			<NavItem>
 				<NavLink to={`/users/${currUser.username}`}>Profile</NavLink>
 			</NavItem>
 			<NavItem>
@@ -43,7 +46,7 @@ const NavBar = ({ logout }) => {
 	return (
 		<Navbar expand='md'>
 			<NavLink to='/' className='brand'>
-				Shop n' Swap
+				Shop 'n' Swap
 			</NavLink>
 			{links}
 		</Navbar>
