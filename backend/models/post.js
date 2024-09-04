@@ -35,6 +35,7 @@ class Post {
 	 * searchFilters (all optional):
 	 * - itemName (case-insensitive, partial matches)
 	 * - posterUsername (case-insensitive, partial matches)
+	 * - minRating
 	 *
 	 * Returns [{ id, posterUsername, itemId, locationId, postedAt }, ...]
 	 *
@@ -47,11 +48,11 @@ class Post {
                             p.item_id AS "itemId",
                             p.location_id AS "locationId",
                             p.posted_at AS "postedAt"
-                     FROM posts AS p JOIN items AS i ON p.item_id = i.id`;
+                     FROM posts AS p JOIN items AS i ON p.item_id = i.id JOIN users AS u ON p.poster_username = u.username`;
 		let whereExpressions = [];
 		let queryValues = [];
 
-		const { itemName, posterUsername } = searchFilters;
+		const { itemName, posterUsername, minRating } = searchFilters;
 
 		// For each possible search term, add to whereExpressions and queryValues so we can generate the right SQL
 		if (itemName) {
@@ -62,6 +63,11 @@ class Post {
 		if (posterUsername) {
 			queryValues.push(`%${posterUsername}%`);
 			whereExpressions.push(`poster_username ILIKE $${queryValues.length}`);
+		}
+
+		if (minRating) {
+			queryValues.push(minRating);
+			whereExpressions.push(`u.rating >= $${queryValues.length}`);
 		}
 
 		if (whereExpressions.length > 0) {

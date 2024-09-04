@@ -15,7 +15,7 @@ const PostList = ({ username }) => {
 	const [locations, setLocations] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [searchParams, handleChange, setSearchParams] = useFields({ posterUsername: '', itemName: '' });
+	const [searchParams, handleChange, setSearchParams] = useFields({ posterUsername: '', itemName: '', minRating: '' });
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -89,10 +89,9 @@ const PostList = ({ username }) => {
 
 		// Remove empty search terms
 		const searchTerms = {};
-		const posterUsername = searchParams.posterUsername;
-		const itemName = searchParams.itemName;
-		if (posterUsername) searchTerms.posterUsername = posterUsername;
-		if (itemName) searchTerms.itemName = itemName;
+		if (searchParams.posterUsername) searchTerms.posterUsername = searchParams.posterUsername;
+		if (searchParams.itemName) searchTerms.itemName = searchParams.itemName;
+		if (searchParams.minRating) searchTerms.minRating = searchParams.minRating;
 
 		// Update the URL with the search terms, triggering a re-fetch of the data from useEffect
 		const search = new URLSearchParams({ ...searchTerms }).toString();
@@ -106,7 +105,7 @@ const PostList = ({ username }) => {
 				{/* Search Form */}
 				<SearchBar
 					names={username ? ['itemName'] : ['posterUsername', 'itemName']}
-					values={username ? [searchParams.itemName] : [searchParams.posterUsername, searchParams.itemName]}
+					values={username ? [searchParams.itemName, searchParams.minRating] : [searchParams.posterUsername, searchParams.itemName, searchParams.minRating]}
 					placeholders={username ? ['Item'] : ['Username', 'Item']}
 					onChange={handleChange}
 					handleSubmit={handleSubmit}
@@ -136,7 +135,7 @@ const PostList = ({ username }) => {
 					) : (
 						<div className='PostList-posts container'>
 							{posts.map(p => (
-								<PostCard key={p.id} post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
+								<PostCard className='PostCard' key={p.id} post={p} item={items[p.itemId] || {}} location={locations[p.locationId] || {}} user={users[p.posterUsername] || {}} />
 							))}
 						</div>
 					)}

@@ -1,28 +1,28 @@
 /* Container for the entire PostList section */
 .PostList {
-    padding: 2rem;
+	padding: 2rem;
 	display: grid; /* So that Error Alert can be positioned in the center */
 }
 
 /* Grid layout for posts */
 .PostList-posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 3rem;
-    justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 3rem;
+	justify-content: center;
 }
 
 .PostList .upper {
-    position: relative;
-    display: flex;
-    justify-content: center;
+	position: relative;
+	display: flex;
+	justify-content: center;
 }
 
 .PostList .btn-add {
 	background-color: #1c8ac2;
-    position: absolute;
-    right: 10%;
-    top: 17%;
+	position: absolute;
+	right: 10%;
+	top: 17%;
 	border: none;
 	border-radius: 7px;
 	width: 40px;
@@ -33,10 +33,16 @@
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-    padding: 25px;
+	padding: 25px;
 }
 
 .PostList .btn-add:hover {
 	background-color: #1c8ac2;
 	color: black;
+}
+
+@media (max-width: 768px) {
+	.PostList-posts {
+		grid-template-columns: 1fr;
+	}
 }

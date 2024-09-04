@@ -29,10 +29,19 @@ const PostDetail = () => {
 	const handleShow = () => setShowModal(true);
 	const handleClose = () => setShowModal(false);
 
+	const handleDelete = async () => {
+		try {
+			await ShopApi.deletePost(id);
+			navigate('/');
+		} catch (error) {
+			setError(error);
+		}
+	};
+
 	const handlePurchase = async () => {
 		try {
 			const { id: transactionId } = await ShopApi.createTransaction(id, currUser.username, user.username, item.price);
-			await ShopApi.markItemSold( item.id );
+			await ShopApi.markItemSold(item.id);
 			navigate(`/transactions/${transactionId}`);
 		} catch (error) {
 			setError(error);
@@ -44,7 +53,7 @@ const PostDetail = () => {
 			try {
 				// Returns { id, posterUsername, itemId, locationId, postedAt }
 				const postData = await ShopApi.getPost(id);
-				if (!postData) navigate('/404')
+				if (!postData) navigate('/404');
 				setPost(postData);
 
 				// Returns { id, image, category, title, price, isSold, description, ownerUsername }
@@ -108,9 +117,13 @@ const PostDetail = () => {
 										</h4>
 									</div>
 								</div>
-								{currUser.username !== user?.username && (
+								{currUser.username !== user?.username ? (
 									<button className='btn btn-success btn-lg mt-2' onClick={handleShow}>
 										Purchase
+									</button>
+								) : (
+									<button className='btn btn-danger' onClick={handleDelete}>
+										Delete
 									</button>
 								)}
 							</div>

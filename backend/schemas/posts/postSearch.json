@@ -21,6 +21,14 @@
             "examples": [
                 "mhealy"
             ]
+        },
+        "minRating": {
+            "type": "number",
+            "default": 0,
+            "title": "The minRating Schema",
+            "examples": [
+                3
+            ]
         }
     },
     "additionalProperties": false

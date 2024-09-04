@@ -7,6 +7,7 @@ import { validate } from '../helpers/formValidation';
 
 const SignupForm = ({ register }) => {
 	const [formData, handleChange] = useFields({ username: '', password: '', firstName: '', lastName: '', email: '', phoneNumber: ''});
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const handleFileChange = e => setSelectedFile(e.target.files[0]);
@@ -14,6 +15,7 @@ const SignupForm = ({ register }) => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setLoading(true);
 		try {
 			const validationErrors = validate(formData, ['phoneNumber', 'email', 'firstName', 'lastName', 'password']);
 			if (Object.keys(validationErrors).length > 0) {
@@ -30,6 +32,7 @@ const SignupForm = ({ register }) => {
 				formDataToSubmit.append('profilePicture', 'uploads/default-pic.png');
 			 } 
 			await register(formDataToSubmit);
+			setLoading(false);
 			navigate('/');
 		} catch (err) {
 			setError(err);
@@ -86,7 +89,7 @@ const SignupForm = ({ register }) => {
 							<input type='file' id='profilePicture' name='profilePicture' className='form-control' onChange={handleFileChange} />
 						</div>
 						<button type='submit' className='btn btn-primary btn-block'>
-							Submit
+						{loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : 'Submit'}
 						</button>
 					</form>
 				</div>

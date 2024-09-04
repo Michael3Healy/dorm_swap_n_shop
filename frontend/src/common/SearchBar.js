@@ -9,6 +9,7 @@ const SearchBar = ({ names, values, onChange, placeholders, handleSubmit, compon
 						<input className='form-control' id={name} name={name} type='text' placeholder={placeholders[i]} value={values[i] || ''} onChange={onChange} />
 					</div>
 				))}
+				<input type='number' className='form-control' name='minRating' id='minRating' min={0} max={5} step={0.1} placeholder='Rating' value={values[values.length - 1] || ''} onChange={onChange} />
 				<button className='btn btn-main mx-2' type='submit'>
 					Search
 				</button>

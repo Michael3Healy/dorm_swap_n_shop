@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../db');
-const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expressError');
+const { NotFoundError } = require('../expressError');
 const { sqlForPartialUpdate } = require('../helpers/sql');
 
 class Item {
@@ -11,9 +11,10 @@ class Item {
 	 *
 	 * Returns { id, image, category, title, price, isSold, description, ownerUsername }
 	 *
-	 * Throws BadRequestError if item already in database.
+	 * No need to check for duplicate items. Multiple people will sell items with the same title, price, etc.
 	 **/
 	static async create({ image, category, title, price, description, ownerUsername }) {
+
 
 		// Insert item into database
 		const result = await db.query(

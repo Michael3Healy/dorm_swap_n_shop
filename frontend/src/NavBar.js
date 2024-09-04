@@ -1,23 +1,30 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavbarToggler, Collapse } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import UserContext from './userContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import './NavBar.css';
 
 const NavBar = ({ logout }) => {
 	const { currUser } = useContext(UserContext);
+	const [isOpen, setIsOpen] = useState(false);
+
+	const toggle = () => setIsOpen(!isOpen);
 
 	const loggedInLinks = (
-		<Nav className='ml-auto' navbar>
+		<Nav className='ms-auto' navbar>
 			<NavItem>
 				<NavLink to='/posts'>Listings</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/users' end>Users</NavLink>
+				<NavLink to='/users' end>
+					Users
+				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/transactions' end>Transactions</NavLink>
+				<NavLink to='/transactions' end>
+					Transactions
+				</NavLink>
 			</NavItem>
 			<NavItem>
 				<NavLink to={`/users/${currUser.username}`}>Profile</NavLink>
@@ -31,7 +38,7 @@ const NavBar = ({ logout }) => {
 	);
 
 	const anonLinks = (
-		<Nav className='ml-auto' navbar>
+		<Nav className='ms-auto' navbar>
 			<NavItem>
 				<NavLink to='/login'>Login</NavLink>
 			</NavItem>
@@ -44,11 +51,12 @@ const NavBar = ({ logout }) => {
 	let links = currUser.username ? loggedInLinks : anonLinks;
 
 	return (
-		<Navbar expand='md'>
+		<Navbar expand='sm'>
 			<NavLink to='/' className='brand'>
 				Shop 'n' Swap
 			</NavLink>
-			{links}
+			<NavbarToggler onClick={toggle} />
+			<Collapse isOpen={isOpen} navbar>{links}</Collapse>
 		</Navbar>
 	);
 };

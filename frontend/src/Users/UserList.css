@@ -10,6 +10,18 @@
 }
 
 .UserList-cardLink {
-    text-decoration: none;
-    color: inherit;
+	text-decoration: none;
+	color: inherit;
+}
+
+@media (max-width: 768px) {
+	.UserList-users {
+		grid-template-columns: 1fr; /* Changes to a single column */
+		justify-content: center;
+		width: 100%;
+	}
+	.PostCard {
+		width: 100%; /* Ensure PostCards are full width */
+		max-width: 400px; /* Add a max-width to avoid them being too large */
+	}
 }

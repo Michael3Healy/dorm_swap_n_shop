@@ -43,11 +43,13 @@ router.post('/', ensureLoggedIn, async function (req, res, next) {
  * Can filter on provided search filters:
  * - itemName (case-insensitive, partial matches)
  * - posterUsername (case-insensitive, partial matches)
+ * - minRating
  *
  * Authorization required: none
  */
 router.get('/', async function (req, res, next) {
 	try {
+		if (req.query.minRating) req.query.minRating = +req.query.minRating;
 		const validator = jsonschema.validate(req.query, postSearchSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);
