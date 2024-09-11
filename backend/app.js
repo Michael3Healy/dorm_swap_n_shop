@@ -3,6 +3,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require('path')
+const fs = require('fs')
 
 const { NotFoundError } = require("./expressError");
 
@@ -22,6 +23,23 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authenticateJWT);
+
+// Check if the file exists before serving it
+app.get('/uploads/:filename', (req, res, next) => {
+  const filePath = path.join(__dirname, 'uploads', req.params.filename);
+
+  // Check if the file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      // If file doesn't exist, return a default image
+      console.log(`File ${req.params.filename} not found. Serving default image.`);
+      return res.sendFile(path.join(__dirname, 'uploads', 'default-pic.png')); // Path to your default image
+    }
+
+    // If file exists, continue to the next middleware (which is express.static)
+    next();
+  });
+});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/auth", authRoutes);
