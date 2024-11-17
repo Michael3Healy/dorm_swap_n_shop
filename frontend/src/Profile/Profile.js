@@ -12,7 +12,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 const Profile = () => {
 	const { currUser } = useContext(UserContext);
 	const { username } = useParams();
-	const [userProfile, setUserProfile] = useState({});
+	const [user, setUser] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
@@ -21,9 +21,9 @@ const Profile = () => {
 		const fetchUserData = async () => {
 			try {
 				const userData = await ShopApi.getUser(username);
-				setUserProfile(userData);
+				setUser(userData);
 			} catch (err) {
-				setError(err.response?.data?.error?.message || err.message || 'User not found');
+				setError(err.response?.data?.error?.message || err.message || 'user not found');
 				navigate('/404');
 			} finally {
 				setIsLoading(false);
@@ -34,7 +34,7 @@ const Profile = () => {
 			fetchUserData();
 		} else {
 			// Set user data to current user
-			setUserProfile(currUser);
+			setUser(currUser);
 		}
 		setIsLoading(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,32 +50,32 @@ const Profile = () => {
 					<div className='row'>
 						<div className='col-12'>
 							<div className='image'>
-								<img src={userProfile.profilePicture ? `${BASE_URL}/${userProfile.profilePicture}` : `${BASE_URL}/uploads/default-pic.png`} className='rounded' width={250} alt='...' />
+								<img src={user?.profilePicture?.startsWith("http") ? user.profilePicture : `${BASE_URL}/${user.profilePicture}`} className='rounded' width={250} alt='...' />
 							</div>
 						</div>
 					</div>
 					<div className='row'>
 						<div className='col-12'>
-							<h2>{userProfile.username}</h2>
+							<h2>{user.username}</h2>
 
 							<div className='rounded text-white stats d-flex justify-content-center'>
 								<div className='d-flex flex-column m-2'>
 									<span className='listings'>Listings</span>
-									<span className='number1'>{userProfile.posts?.length}</span>
+									<span className='number1'>{user.posts?.length}</span>
 								</div>
 
 								<div className='justify-content-center m-2'>
 									<span className='ratings'>Rating</span>
 									<div className='d-flex fs-3 justify-content-center'>
-										<StarRating rating={userProfile.rating || 0} />
-										<span className='num-ratings'>({userProfile.numRatings})</span>
+										<StarRating rating={user.rating || 0} />
+										<span className='num-ratings'>({user.numRatings})</span>
 									</div>
 								</div>
 							</div>
 							<div className='personal p-2'>
 								<h5>Contact</h5>
-								<p>Phone Number: {userProfile.phoneNumber}</p>
-								<p>Email: {userProfile.email}</p>
+								<p>Phone Number: {user.phoneNumber}</p>
+								<p>Email: {user.email}</p>
 							</div>
 							{username === currUser.username && (
 								<div className='button-container'>
@@ -89,7 +89,7 @@ const Profile = () => {
 				</div>
 			</div>
 			<h2 className='text-center mt-5'>Posts</h2>
-			<PostList username={userProfile.username || username || currUser.username} />
+			<PostList username={user.username || username || currUser.username} />
 		</div>
 	);
 };
