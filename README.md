@@ -76,7 +76,7 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 ### Item Details
 
-- Provides detailed information about each item, including images, price, and seller information.
+- Provides detailed information about each item, including images, price, and seller information.*
 - Uses GoogleMaps API to display the location of the item.
 
 ### Responsive Design
@@ -115,3 +115,5 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 - Bootstrap
 - Jest
 - React Testing Library
+
+*This application is deployed on Render, which uses ephemeral storage for its server instances. This means that any files uploaded to the server (e.g., images) are stored temporarily and will be lost when the server restarts. As a result, images uploaded for items or users will not persist. A future solution will be to incorporate a cloud storage service, such as Amazon S3.
