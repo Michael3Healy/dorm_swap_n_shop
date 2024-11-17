@@ -12,6 +12,16 @@ const PASSWORD = process.env.PASSWORD;
 
 const PORT = +process.env.PORT || 3001;
 
+// Attach AWS S3 bucket for saving photos uploaded by users
+const { S3Client } = require('@aws-sdk/client-s3');
+const s3 = new S3Client({
+	region: process.env.AWS_REGION,
+	credentials: {
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+	},
+});
+
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
 	return process.env.NODE_ENV === 'test' ? `postgresql://${USERNAME}:${PASSWORD}@localhost/dorm_shop_test` : process.env.DATABASE_URL || `postgresql://${USERNAME}:${PASSWORD}@localhost/dorm_shop`;
@@ -35,4 +45,5 @@ module.exports = {
 	PORT,
 	BCRYPT_WORK_FACTOR,
 	getDatabaseUri,
+	s3,
 };

@@ -6,7 +6,6 @@ async function updateItem(data, id, username) {
 	try {
         // Only allow owner to update item attributes besides isSold
 		if (Object.keys(data).length > 1 || !data.isSold) {
-            console.log('keys', Object.keys(data));
 			const item = await Item.get(id);
 			if (item.ownerUsername !== username) throw new UnauthorizedError('User does not own this item');
 		}

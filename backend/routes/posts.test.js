@@ -18,6 +18,7 @@ describe('POST /posts', function () {
 			.send({
 				itemId: testItemIds[2],
 				locationId: testLocationId[0],
+				posterUsername: 'u1',
 			})
 			.set('Authorization', `Bearer ${u1Token}`);
 

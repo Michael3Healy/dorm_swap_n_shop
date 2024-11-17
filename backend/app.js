@@ -33,7 +33,7 @@ app.get('/uploads/:filename', (req, res, next) => {
     if (err) {
       // If file doesn't exist, return a default image
       console.log(`File ${req.params.filename} not found. Serving default image.`);
-      return res.sendFile(path.join(__dirname, 'uploads', 'default-pic.png')); // Path to your default image
+      return res.sendFile(path.join(__dirname, 'uploads', 'default-pic.png')); // Path to default image
     }
 
     // If file exists, continue to the next middleware (which is express.static)

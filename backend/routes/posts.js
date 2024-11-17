@@ -33,6 +33,7 @@ router.post('/', ensureLoggedIn, async function (req, res, next) {
 		const post = await postService.createPost({ ...req.body, posterUsername: username });
 		return res.status(201).json({ post });
 	} catch (err) {
+		console.log(err);
 		return next(err);
 	}
 });

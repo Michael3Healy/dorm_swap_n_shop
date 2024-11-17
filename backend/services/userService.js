@@ -27,8 +27,6 @@ async function updateUser(username, data) {
 
 	delete data.password;
 
-	console.log(data);
-
 	const user = await User.update(username, data);
 
 	if (!user) throw new BadRequestError(`User with username ${username} not found`);

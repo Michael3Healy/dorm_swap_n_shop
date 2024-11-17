@@ -178,6 +178,8 @@ describe('get', function () {
       username: 'u1',
       firstName: 'Mickey',
       lastName: 'Mouse',
+      numRatings: 2,
+      rating: '4.50',
       email: 'mickey_mouse@yahoo.com',
       isAdmin: true,
       phoneNumber: '123-456-7890',
