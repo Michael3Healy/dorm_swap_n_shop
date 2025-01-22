@@ -94,6 +94,7 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 - Manages application state effectively with React's built-in state management features as well as custom hooks.
 - Uses local storage for persisting user sessions.
+- Incorporates AWS S3 for persistence of user-uploaded images
 
 ### Frontend Deployment
 
@@ -119,6 +120,7 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 - PostgreSQL
 - JWT
 - Jest
+- AWS S3
 
 ### Frontend
 
