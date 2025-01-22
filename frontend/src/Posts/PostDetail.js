@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoadingScreen from '../LoadingScreen';
 import ErrorAlert from '../ErrorAlert';
@@ -95,39 +95,31 @@ const PostDetail = () => {
 							</div>
 						</div>
 					</div>
-
-					<div className='col'>
-						<div className='row'>
-							<div className='col-12'>
-								<div className='row'>
-									<div className='col-6 info-container'>
-										<h3 className='mt-5'>{item?.title}</h3>
-										<p className='badge text-bg-info'>{item?.category}</p>
-										<h4 className='seller'>{user?.username}</h4>
-										<div className='rating-container d-flex justify-content-center'>
-											<StarRating rating={user?.rating || 0} />
-											<span className='num-ratings'>({user?.numRatings})</span>
-										</div>
-										<p className='mt-3'>{item?.description}</p>
-									</div>
-									<div className='col-6 map-container'>
-										<Map locationId={post?.locationId} size='200x200' style={{ marginTop: '2rem' }} />
-										<h4>
-											Pickup At: {location?.street}, {location?.city} {location?.state}
-										</h4>
-									</div>
-								</div>
-								{currUser.username !== user?.username ? (
-									<button className='btn btn-success btn-lg mt-2' onClick={handleShow}>
-										Purchase
-									</button>
-								) : (
-									<button className='btn btn-danger' onClick={handleDelete}>
-										Delete
-									</button>
-								)}
+					<div className='col info-container text-start'>
+						<h1 className='my-0 title'>{item?.title}</h1>
+						<p className='badge text-bg-info'>{item?.category}</p>
+						<h2 className='seller mt-3 mb-0'><Link className='PostDetail-cardLink' to={`/users/${user?.username}`}>{user?.username}</Link></h2>
+						<div className='rating-container d-flex'>
+							<StarRating rating={user?.rating || 0} />
+							<span className='num-ratings'>({user?.numRatings})</span>
+						</div>
+						<p className='mt-3 description'>"{item?.description}"</p>
+						<div className='col-12 map-container'>
+							<Map locationId={post?.locationId} size='200x200'/>
+							<div className='location'>
+								<p className='m-0'>Pickup At: </p>
+								<p className=''>{location?.street}, {location?.city} {location?.state}</p>
 							</div>
 						</div>
+						{currUser.username !== user?.username ? (
+							<button className='btn btn-success decision-btn' onClick={handleShow}>
+								Purchase
+							</button>
+						) : (
+							<button className='btn btn-danger decision-btn' onClick={handleDelete}>
+								Delete
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

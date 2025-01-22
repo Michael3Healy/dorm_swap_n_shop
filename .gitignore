@@ -5,6 +5,11 @@
 /backend/*.log
 /backend/tmp
 /backend/coverage
+/backend/.ebextensions/
+/backend/.ebignore
+/backend/*.zip
+/backend/Procfile
+
 
 # Frontend
 /frontend/node_modules
@@ -12,6 +17,12 @@
 /frontend/.env
 /frontend/*.log
 /frontend/.vscode/
+/frontend/.ebextensions/
+/frontend/.ebignore
+/frontend/app.zip
+/frontend/server.js
+/frontend/Procfile
+/frontend/coverage/
 *.swp
 *.swo
 

@@ -1,15 +1,19 @@
 import useFields from '../hooks/useFields';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './LoginForm.css';
 
 const LoginForm = ({ login }) => {
 	const [formData, handleChange] = useFields({ username: '', password: '' });
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 
     // Error handled in App component (login function)
 	const handleSubmit = async e => {
 			e.preventDefault();
+			setLoading(true);
 			await login(formData);
+			setLoading(false);
 			navigate('/');
 	};
 
@@ -31,7 +35,7 @@ const LoginForm = ({ login }) => {
 							<input type='password' id='password' name='password' className='form-control' onChange={handleChange} value={formData.password} required />
 						</div>
 						<button type='submit' className='btn btn-primary btn-block'>
-							Submit
+						{loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : 'Submit'}
 						</button>
 					</form>
 				</div>

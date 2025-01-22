@@ -4,21 +4,23 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 ## Table of Contents
 
-- [Link to Live Site](https://dorm-swap-n-shop-frontend.onrender.com/)
+- [Link to Live Site](http://dgd6mwd26zyub.cloudfront.net)
 - [Backend Features](#backend-features)
   - [Authentication \& Authorization](#authentication--authorization)
   - [Companies \& Items](#companies--items)
   - [Transactions](#transactions)
   - [Testing](#testing)
   - [Documentation](#documentation)
-- [Backend Setup](#backend-setup)
+  - [Backend Deployment](#backend-deployment)
+- [Backend Setup](#backend-development-setup)
 - [Frontend Features](#frontend-features)
   - [User Interface](#user-interface)
   - [Authentication](#authentication)
   - [Item Search \& Filtering](#item-search--filtering)
   - [Responsive Design](#responsive-design)
   - [State Management](#state-management)
-- [Frontend Setup](#frontend-setup)
+  - [Frontend Deployment](#frontend-deployment)
+- [Frontend Setup](#frontend-development-setup)
 - [Technologies Used](#technologies-used)
   - [Backend](#backend)
   - [Frontend](#frontend)
@@ -48,7 +50,12 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 - Extensively documented codebase with clear explanations of functions and routes.
 
-## Backend Setup
+### Backend Deployment
+
+- The backend is deployed on AWS Elastic Beanstalk, which provides an easy-to-manage and reliable environment for scaling and running the server.
+  It connects to a SupaBase PostgreSQL database to store application data.
+
+## Backend Development Setup
 
 1. Clone the repository: `git clone <repository-url>`
 2. Navigate to the backend directory: `cd backend`
@@ -76,7 +83,7 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 ### Item Details
 
-- Provides detailed information about each item, including images, price, and seller information.*
+- Provides detailed information about each item, including images, price, and seller information.
 - Uses GoogleMaps API to display the location of the item.
 
 ### Responsive Design
@@ -88,7 +95,13 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 - Manages application state effectively with React's built-in state management features as well as custom hooks.
 - Uses local storage for persisting user sessions.
 
-## Frontend Setup
+### Frontend Deployment
+
+- The frontend is deployed as a static React app using AWS S3 and AWS CloudFront. The app's static files are uploaded to an S3 bucket configured for public access,
+  enabling static website hosting. AWS CloudFront acts as a Content Delivery Network (CDN), caching and serving the files from edge locations globally to ensure fast and
+  secure delivery.
+
+## Frontend Development Setup
 
 1. Clone the repository: `git clone <repository-url>`
 2. Navigate to the frontend directory: `cd frontend`
@@ -115,5 +128,3 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 - Bootstrap
 - Jest
 - React Testing Library
-
-*This application is deployed on Render, which uses ephemeral storage for its server instances. This means that any files uploaded to the server (e.g., images) are stored temporarily and will be lost when the server restarts. As a result, images uploaded for items or users will not persist. A future solution will be to incorporate a cloud storage service, such as Amazon S3.
