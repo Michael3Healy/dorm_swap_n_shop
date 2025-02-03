@@ -44,7 +44,7 @@ const SignupForm = ({ register }) => {
 	return (
 		<div className='SignupForm container'>
 			<div className='row justify-content-center mt-5'>
-				<div className='col-6'>
+				<div className='col-md-6 col-sm-9 col-11'>
 					<form className='bg-light p-4 rounded shadow-md' onSubmit={handleSubmit} data-testid='signup-form'>
 						<div className='mb-4'>
 							<label htmlFor='username' className='form-label required'>

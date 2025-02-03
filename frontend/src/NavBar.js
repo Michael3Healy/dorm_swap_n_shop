@@ -14,23 +14,27 @@ const NavBar = ({ logout }) => {
 	const loggedInLinks = (
 		<Nav className='ms-auto' navbar>
 			<NavItem>
-				<NavLink to='/posts'>Listings</NavLink>
+				<NavLink to='/posts' className='nav-link'>
+					Listings
+				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/users' end>
+				<NavLink to='/users' end className='nav-link'>
 					Users
 				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/transactions' end>
+				<NavLink to='/transactions' end className='nav-link'>
 					Transactions
 				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to={`/users/${currUser.username}`}>Profile</NavLink>
+				<NavLink to={`/users/${currUser.username}`} className='nav-link'>
+					Profile
+				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/' onClick={logout} className='logout'>
+				<NavLink to='/' onClick={logout} className='logout nav-link' >
 					Logout
 				</NavLink>
 			</NavItem>
@@ -38,12 +42,16 @@ const NavBar = ({ logout }) => {
 	);
 
 	const anonLinks = (
-		<Nav className='ms-auto' navbar>
+		<Nav className='ms-auto nav-list d-flex justify-content-end' navbar>
 			<NavItem>
-				<NavLink to='/login'>Login</NavLink>
+				<NavLink to='/login' className='nav-link'>
+					Login
+				</NavLink>
 			</NavItem>
 			<NavItem>
-				<NavLink to='/register'>Signup</NavLink>
+				<NavLink to='/register' className='nav-link'>
+					Signup
+				</NavLink>
 			</NavItem>
 		</Nav>
 	);
@@ -56,7 +64,9 @@ const NavBar = ({ logout }) => {
 				Shop 'n' Swap
 			</NavLink>
 			<NavbarToggler onClick={toggle} />
-			<Collapse isOpen={isOpen} navbar>{links}</Collapse>
+			<Collapse isOpen={isOpen} navbar className='navbar-collapse'>
+				{links}
+			</Collapse>
 		</Navbar>
 	);
 };

@@ -27,7 +27,7 @@ const Home = () => {
 			<div className='container'>
 				<h1 className='display-1'>Welcome to Dorm Swap 'n' Shop</h1>
 				<h5 className='display-5 mb-3'>The Online Marketplace for College Students</h5>
-				<div className='row '>
+				<div className='row d-flex justify-content-center'>
 					<div id='Home-carousel' className='carousel carousel-dark slide p-0'>
 						<div className='carousel-indicators'>
 							<button type='button' data-bs-target='#Home-carousel' data-bs-slide-to='0' className='active'></button>

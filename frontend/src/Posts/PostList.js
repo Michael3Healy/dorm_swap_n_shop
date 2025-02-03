@@ -100,32 +100,34 @@ const PostList = ({ username }) => {
 
 	return (
 		<div className='PostList'>
-			{error && <ErrorAlert error={error} />}
-			<div className='upper'>
-				{/* Search Form */}
-				<SearchBar
-					names={username ? ['itemName'] : ['posterUsername', 'itemName']}
-					values={username ? [searchParams.itemName, searchParams.minRating] : [searchParams.posterUsername, searchParams.itemName, searchParams.minRating]}
-					placeholders={username ? ['Item'] : ['Username', 'Item']}
-					onChange={handleChange}
-					handleSubmit={handleSubmit}
-				/>
-				{/* Add Post Button */}
-				{!username && (
-					<div className='add-post'>
-						<Link to='/posts/new/location'>
-							<button className='btn btn-main btn-add'>
-								<i className='fa-solid fa-plus'></i>
-							</button>
-						</Link>
-					</div>
-				)}
-			</div>
+			<section className='container'>
+				{error && <ErrorAlert error={error} />}
+				<div className='upper'>
+					{/* Search Form */}
+					<SearchBar
+						names={username ? ['itemName'] : ['posterUsername', 'itemName']}
+						values={username ? [searchParams.itemName, searchParams.minRating] : [searchParams.posterUsername, searchParams.itemName, searchParams.minRating]}
+						placeholders={username ? ['Item'] : ['Username', 'Item']}
+						onChange={handleChange}
+						handleSubmit={handleSubmit}
+					/>
+					{/* Add Post Button */}
+					{!username && (
+						<div className='add-post'>
+							<Link to='/posts/new/location'>
+								<button className='btn btn-main btn-add' id='plusbtn'>
+									<i className='fa fa-plus'></i>
+								</button>
+							</Link>
+						</div>
+					)}
+				</div>
+			</section>
 			{/* Post List */}
 			{isLoading ? (
 				<div className='PostList-posts container'>
 					{Array.from({ length: 12 }).map((_, idx) => (
-						<PlaceholderCard key={idx}/>
+						<PlaceholderCard key={idx} />
 					))}
 				</div>
 			) : (

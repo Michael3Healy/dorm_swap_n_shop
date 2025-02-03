@@ -1,39 +1,39 @@
 /* Container for the entire PostList section */
-.PostList {
-	padding: 2rem;
-	display: grid; /* So that Error Alert can be positioned in the center */
-}
 
 /* Grid layout for posts */
+
+.PostList {
+	padding: 1rem;
+}
+
 .PostList-posts {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 3rem;
+	grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+	gap: 3rem;
 	justify-content: center;
+	justify-items: center;
 }
 
-.PostList .upper {
-	position: relative;
-	display: flex;
-	justify-content: center;
-}
+
 
 .PostList .btn-add {
+	margin-left: auto;
 	background-color: #1c8ac2;
-	position: absolute;
-	right: 10%;
-	top: 17%;
 	border: none;
 	border-radius: 7px;
-	width: 40px;
-	height: 40px;
+	width: 2.5rem;
+	height: 2.5rem;
 	font-size: 2rem;
 	color: white;
-	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 	padding: 25px;
+	display: flex;
+}
+
+.PostList .fa-plus {
+	position: absolute; /* For whatever reason, this is necessary to prevent a blue line under the + sign */
 }
 
 .PostList .btn-add:hover {
@@ -41,8 +41,27 @@
 	color: black;
 }
 
-@media (max-width: 768px) {
+/* .PostList .upper {
+	
+} */
+
+@media (min-width: 768px) {
 	.PostList-posts {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+		justify-content: center;
+		justify-items: stretch;
+		border: 1px solid red;
+	}
+
+	.PostList {
+		padding: 2rem;
+	}
+}
+
+@media (min-width: 1098px) {
+	.PostList .upper {
+		position: relative;
+		display: flex;
+		justify-content: space-around;
 	}
 }

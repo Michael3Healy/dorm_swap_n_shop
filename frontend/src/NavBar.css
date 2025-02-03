@@ -1,12 +1,7 @@
 nav {
 	background: #00606D;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
-	height: 60px;
-}
-
-.nav-item {
-	width: 100px;
-	text-align: center;
+	min-height: 60px;
 }
 
 nav a {
@@ -37,4 +32,15 @@ nav a.brand {
 nav a:not(.brand):hover {
 	font-weight: bold;
 	color: black !important;
+}
+
+.navbar-collapse {
+	display: flex;
+	/* margin-top: 1em; */
+}
+
+.navbar-collapse .nav-link{
+	text-align: end;
+	color: white;
+	font-weight: bold;
 }
