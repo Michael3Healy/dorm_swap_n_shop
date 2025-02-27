@@ -4,7 +4,7 @@ Dorm Swap 'n' Shop is a comprehensive application for managing and exchanging it
 
 ## Table of Contents
 
-- [Link to Live Site](http://dgd6mwd26zyub.cloudfront.net) (If the site does not work, manually change the URL to use `http` in your browser. I will add https support at some point.)
+- [Link to Live Site](http://dgd6mwd26zyub.cloudfront.net) (Currently down to save costs)
 - [Backend Features](#backend-features)
   - [Authentication \& Authorization](#authentication--authorization)
   - [Companies \& Items](#companies--items)
