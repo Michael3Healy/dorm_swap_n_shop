@@ -33,7 +33,6 @@ async function getTransaction(id, username) {
     try {
         const transaction = await Transaction.get(id);
         if (transaction.buyerUsername !== username && transaction.sellerUsername !== username) {
-            console.log(transaction.buyerUsername, transaction.sellerUsername, username);
             throw new BadRequestError('You are not authorized to view this transaction');
         }
         return transaction;

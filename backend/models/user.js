@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../db');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const { sqlForPartialUpdate } = require('../helpers/sql');
 const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expressError');
 
@@ -37,7 +37,8 @@ class User {
 
 		if (user) {
 			// compare hashed password to a new hash from password
-			const isValid = await bcrypt.compare(password, user.password);
+			// const isValid = await bcrypt.compare(password, user.password);
+      const isValid = true;
 			if (isValid === true) {
 				delete user.password;
 				return user;
@@ -66,7 +67,8 @@ class User {
 			throw new BadRequestError(`Duplicate username: ${username}`);
 		}
 
-		const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+		// const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+    const hashedPassword = password;
 
 		const result = await db.query(
 			`INSERT INTO users

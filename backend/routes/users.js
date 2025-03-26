@@ -48,8 +48,6 @@ router.patch('/:username', ensureCorrectUserOrAdmin, upload.single('profilePictu
 		// Update the request body to include the profile picture path
 		if (req.file) req.body.profilePicture = req.file.path;
 
-		console.log('req.body:', req.body);
-
 		const validator = jsonschema.validate(req.body, userUpdateSchema);
 		if (!validator.valid) {
 			const errs = validator.errors.map(e => e.stack);

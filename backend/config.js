@@ -19,10 +19,6 @@ const PORT = +process.env.PORT || 3001;
 const { S3Client } = require('@aws-sdk/client-s3');
 const s3 = new S3Client({
 	region: process.env.AWS_REGION,
-	credentials: {
-		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	},
 });
 
 // Use dev database, testing database, or via env var, production database

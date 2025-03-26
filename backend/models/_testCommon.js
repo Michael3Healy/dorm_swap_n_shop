@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 const db = require('../db');
 const { BCRYPT_WORK_FACTOR } = require('../config');
@@ -21,13 +21,13 @@ async function commonBeforeAll() {
 
 	await db.query(
 		`
-        INSERT INTO users(username, password, first_name, last_name, email, is_admin, phone_number, rating, num_ratings)
+        INSERT INTO users(username, first_name, last_name, email, is_admin, phone_number, rating, num_ratings)
         VALUES 
-        ('u1', $1, 'Mickey', 'Mouse', 'mickey_mouse@yahoo.com', true, '123-456-7890', 4.5, 2),
-        ('u2', $2, 'Bowser', 'Koopa', 'bowser@gmail.com', false, '987-654-3210', 3.5, 2),
-        ('u3', $3, 'Peach', 'Toadstool', 'peach@gmail.com', false, '123-456-7890', 5, 1)
+        ('u1', 'Mickey', 'Mouse', 'mickey_mouse@yahoo.com', true, '123-456-7890', 4.5, 2),
+        ('u2', 'Bowser', 'Koopa', 'bowser@gmail.com', false, '987-654-3210', 3.5, 2),
+        ('u3', 'Peach', 'Toadstool', 'peach@gmail.com', false, '123-456-7890', 5, 1)
     `,
-		[await bcrypt.hash('password1', BCRYPT_WORK_FACTOR), await bcrypt.hash('password2', BCRYPT_WORK_FACTOR), await bcrypt.hash('password3', BCRYPT_WORK_FACTOR)]
+// 		[await bcrypt.hash('password1', BCRYPT_WORK_FACTOR), await bcrypt.hash('password2', BCRYPT_WORK_FACTOR), await bcrypt.hash('password3', BCRYPT_WORK_FACTOR)]
 	);
 
 	const resultsLocations = await db.query(`INSERT INTO locations (latitude, longitude, city, state, zip, street)

@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const db = require('../db');
 const User = require('./user');
 const { NotFoundError, BadRequestError, UnauthorizedError } = require('../expressError');
