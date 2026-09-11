@@ -168,7 +168,7 @@ class User {
 
 		const user = userRes.rows[0];
 
-		if (!user) throw new BadRequestError(`User with username ${username} not found`);
+		if (!user) throw new NotFoundError(`User with username ${username} not found`);
 
 		const userPostsRes = await db.query(
 			`SELECT id, item_id AS "itemId", location_id AS "locationId", posted_at AS "postedAt"
@@ -226,6 +226,8 @@ class User {
                                 profile_picture AS "profilePicture"`;
 		const result = await db.query(querySql, [...values, username]);
 		const user = result.rows[0];
+
+		if (!user) throw new NotFoundError(`No user: ${username}`);
 
 		return user;
 	}

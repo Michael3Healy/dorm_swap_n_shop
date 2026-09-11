@@ -31,6 +31,7 @@ describe('POST /transactions', function () {
 				sellerUsername: 'u1',
 				price: '10.5',
 				transactionDate: expect.any(String),
+				rated: false,
 			},
 		});
 	});

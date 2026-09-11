@@ -29,6 +29,7 @@ describe('create', () => {
 			sellerUsername: 'u2',
 			price: '10.5',
 			transactionDate: expect.any(Date),
+			rated: false,
 		});
 	});
 });
@@ -46,6 +47,7 @@ describe('findAll', () => {
 				sellerUsername: 'u2',
 				price: '10.5',
 				transactionDate: expect.any(Date),
+				rated: false,
 			},
 			{
 				id: expect.any(Number),
@@ -54,6 +56,7 @@ describe('findAll', () => {
 				sellerUsername: 'u3',
 				price: '20.5',
 				transactionDate: expect.any(Date),
+				rated: false,
 			},
 		]);
 	});
@@ -68,6 +71,7 @@ describe('findAll', () => {
 				sellerUsername: 'u3',
 				price: '15.5',
 				transactionDate: expect.any(Date),
+				rated: false,
 			},
 		]);
 
@@ -80,6 +84,7 @@ describe('findAll', () => {
 				sellerUsername: 'u3',
 				price: '20.5',
 				transactionDate: expect.any(Date),
+				rated: false,
 			},
 		]);
 	});

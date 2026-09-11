@@ -13,29 +13,19 @@ afterAll(commonAfterAll);
 /************************************** create */
 
 describe('create', function () {
-	const newLocation = {
-		street: '123 Main St',
-		city: 'New York',
-		state: 'NY',
-		zip: '10001',
-		latitude: '40.712800',
-		longitude: '-74.006000',
-	};
-
 	test('works', async function () {
-		const location = await Location.create(newLocation);
+		const location = await Location.create('123 Main St', 'New York', 'NY', 40.712776, -74.005974);
 		expect(location).toEqual({
 			id: expect.any(Number),
 			street: '123 Main St',
 			city: 'New York',
 			state: 'NY',
-			zip: '10001',
-			latitude: '40.712800',
-			longitude: '-74.006000',
+			latitude: '40.712776',
+			longitude: '-74.005974',
 		});
 
 		const result = await db.query(
-			`SELECT id, street, city, state, zip, latitude, longitude
+			`SELECT id, street, city, state, latitude, longitude
            FROM locations
            WHERE id = $1`,
 			[location.id]
@@ -46,9 +36,8 @@ describe('create', function () {
 				street: '123 Main St',
 				city: 'New York',
 				state: 'NY',
-				zip: '10001',
-				latitude: '40.712800',
-				longitude: '-74.006000',
+				latitude: '40.712776',
+				longitude: '-74.005974',
 			},
 		]);
 	});

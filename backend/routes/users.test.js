@@ -20,6 +20,7 @@ describe('PATCH /users/:username', function () {
 				email: 'updateduser1@user.com',
 				phoneNumber: '123-456-7890',
 				profilePicture: 'http://newprofilepic.img',
+				password: 'password1',
 			})
 			.set('Authorization', `Bearer ${u1Token}`);
 

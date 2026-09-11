@@ -18,9 +18,9 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-describe('POST /new', () => {
+describe('POST /', () => {
 	test('creates a new item for logged in user', async () => {
-		const res = await request(app).post('/items/new').send(newItem).set('authorization', `Bearer ${u1Token}`);
+		const res = await request(app).post('/items').send(newItem).set('authorization', `Bearer ${u1Token}`);
 
 		expect(res.statusCode).toBe(200);
 		expect(res.body).toEqual({
@@ -35,7 +35,7 @@ describe('POST /new', () => {
 
 	test('fails with 400 if required data is missing', async () => {
 		const res = await request(app)
-			.post('/items/new')
+			.post('/items')
 			.send({
 				image: 'http://example.com/image.jpg',
 				title: 'Smartphone',
@@ -50,7 +50,7 @@ describe('POST /new', () => {
 
 	test('fails with 400 if data is invalid', async () => {
 		const res = await request(app)
-			.post('/items/new')
+			.post('/items')
 			.send({
 				...newItem,
 				price: 'not-a-number', // Invalid price
@@ -62,7 +62,7 @@ describe('POST /new', () => {
 	});
 
 	test('fails with 401 if user is not logged in', async () => {
-		const res = await request(app).post('/items/new').send(newItem);
+		const res = await request(app).post('/items').send(newItem);
 
 		expect(res.statusCode).toBe(401);
 		expect(res.body.error.message).toEqual('Unauthorized');
